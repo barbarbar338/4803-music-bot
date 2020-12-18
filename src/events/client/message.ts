@@ -2,19 +2,28 @@ import { bargs } from "bargs/dist";
 import { Message } from "discord.js";
 import { IEvent } from "my-module";
 import CONFIG from "../../config";
+import { GuildModel } from "../../models/guildModel";
 
 const MessageEvent: IEvent = {
 	name: "message",
 	async execute(client, message: Message) {
-		if (
-			!message.content ||
-			!message.content.startsWith(CONFIG.PREFIX) ||
-			!message.guild ||
-			message.author.bot
-		)
-			return;
+		if (!message.content || !message.guild || message.author.bot) return;
+
+		let guildModel = await GuildModel.findOne({
+			guildID: message.guild.id,
+		});
+		if (!guildModel) {
+			guildModel = await GuildModel.create({
+				guildID: message.guild.id,
+				language: "en",
+			});
+		}
+		const { language, prefix: guildPrefix } = guildModel;
+
+		const prefix = guildPrefix || CONFIG.PREFIX;
+		if (!message.content.startsWith(prefix)) return;
 		const [name, ...args] = message.content
-			.slice(CONFIG.PREFIX.length)
+			.slice(prefix.length)
 			.split(/\s+/g);
 		const command = client.commands.get(name);
 		if (!command) return;
@@ -23,20 +32,32 @@ const MessageEvent: IEvent = {
 		const { channel } = message.member.voice;
 
 		if (command.playerRequired && !player)
-			return message.reply("there is no player for this guild.");
+			return message.channel.send(
+				client.i18n.get(language, "events", "message_player_required"),
+			);
 		if (command.channelRequired && !channel)
-			return message.reply("you need to join a voice channel.");
+			return message.channel.send(
+				client.i18n.get(language, "events", "message_channel_required"),
+			);
 		if (
 			command.sameChannelRequired &&
 			(!player || channel.id !== player.voiceChannel)
 		)
-			return message.reply("you're not in the same voice channel.");
+			return message.channel.send(
+				client.i18n.get(
+					language,
+					"events",
+					"message_same_channel_required",
+				),
+			);
 		if (
 			command.joinPermissionRequired &&
 			!channel.permissionsFor(client.user).has("CONNECT")
 		)
 			return message.channel.send(
-				`No Permissions To Connect ${channel.toString()}`,
+				client.i18n.get(language, "events", "message_channel_no_perm", {
+					channel: channel.toString(),
+				}),
 			);
 
 		const isSuccess = await command.execute({
@@ -46,11 +67,12 @@ const MessageEvent: IEvent = {
 			manager: client.manager,
 			player,
 			vc: channel,
+			language,
 		});
 
 		if (!isSuccess)
-			await message.channel.send(
-				"An error occured while executing command. Please try again later.",
+			return message.channel.send(
+				client.i18n.get(language, "events", "message_error"),
 			);
 	},
 };

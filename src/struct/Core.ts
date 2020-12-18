@@ -1,5 +1,7 @@
 import { Client, Collection } from "discord.js";
 import { Manager } from "erela.js";
+import { I18n } from "locale-parser";
+import { connect } from "mongoose";
 
 import { readdirSync } from "fs";
 import { ICommand } from "my-module";
@@ -21,6 +23,7 @@ export class Core extends Client {
 	public commands = new Collection<string, ICommand>();
 	public logger = Logger;
 	public functions = Functions;
+	public i18n = new I18n(CONFIG.I18N);
 
 	private async importCommands(): Promise<void> {
 		const files = readdirSync(resolve(__dirname, "..", "commands"));
@@ -66,6 +69,11 @@ export class Core extends Client {
 		await this.importEvents();
 		await this.importManagerEvents();
 		await this.importCommands();
+		this.logger.info("Connecting to MongoDB");
+		await connect(CONFIG.MONGODB_URI, {
+			useNewUrlParser: true,
+			useUnifiedTopology: true,
+		});
 		this.logger.info("Connecting to Discord API");
 		return this.login(CONFIG.TOKEN);
 	}

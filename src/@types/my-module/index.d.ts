@@ -6,6 +6,7 @@ declare module "my-module" {
 		manager: import("erela.js").Manager;
 		player?: import("erela.js").Player;
 		vc?: import("discord.js").VoiceChannel;
+		language: string;
 	}
 	export interface ICommand {
 		name: string;

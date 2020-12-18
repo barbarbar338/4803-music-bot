@@ -1,5 +1,7 @@
-import { TextChannel } from "discord.js";
+import { TextChannel, VoiceChannel } from "discord.js";
 import { IManagerEvent } from "my-module";
+import CONFIG from "src/config";
+import { GuildModel } from "src/models/guildModel";
 
 const QueueEndEvent: IManagerEvent = {
 	name: "queueEnd",
@@ -7,7 +9,23 @@ const QueueEndEvent: IManagerEvent = {
 		player.destroy();
 		const channel = client.channels.cache.get(player.textChannel);
 		if (!channel) return;
-		(channel as TextChannel).send("Queue empty.");
+
+		let guildModel = await GuildModel.findOne({
+			guildID: (channel as VoiceChannel).guild.id,
+		});
+		if (!guildModel) {
+			guildModel = await GuildModel.create({
+				guildID: (channel as VoiceChannel).guild.id,
+				language: "en",
+			});
+		}
+		const { language, prefix } = guildModel;
+
+		(channel as TextChannel).send(
+			client.i18n.get(language, "events", "queue_end", {
+				prefix: prefix || CONFIG.PREFIX,
+			}),
+		);
 	},
 };
 

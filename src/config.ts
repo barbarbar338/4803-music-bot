@@ -1,4 +1,5 @@
 import * as dotenv from "dotenv";
+import { resolve } from "path";
 
 dotenv.config();
 
@@ -22,6 +23,11 @@ const CONFIG = {
 	},
 	PREFIX: "!",
 	LAVALINK,
+	I18N: {
+		defaultLocale: "en",
+		directory: resolve(__dirname, "locales"),
+	},
+	MONGODB_URI: process.env.MONGODB_URI,
 };
 
 export default CONFIG;

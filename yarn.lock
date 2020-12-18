@@ -1531,6 +1531,13 @@ load-json-file@^2.0.0:
     pify "^2.0.0"
     strip-bom "^3.0.0"
 
+locale-parser@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/locale-parser/-/locale-parser-1.1.2.tgz#a2b2db49fe7c7cda24c34d5f9b5964f2612ba336"
+  integrity sha512-UTk2JAChXU5pl8m6goWJz/T9TubYN1G3hWFvu3ByYWvy/mXYW7fTMscW40a57iXs7QVnMcgs6wsMqiIncSREcw==
+  dependencies:
+    yaml "^1.10.0"
+
 locate-path@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/locate-path/-/locate-path-2.0.0.tgz#2b568b265eec944c6d9c0de9c3dbbbca0354cd8e"
