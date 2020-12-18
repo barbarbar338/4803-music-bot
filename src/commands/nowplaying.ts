@@ -1,6 +1,5 @@
 import { Message, MessageEmbed } from "discord.js";
 import { CommandArgs, ICommand } from "my-module";
-import { formatDuration } from "../struct/Functions";
 
 const NowPlayingCommand: ICommand = {
 	name: "nowplaying",
@@ -9,7 +8,7 @@ const NowPlayingCommand: ICommand = {
 	sameChannelRequired: true,
 	argsDefinitions: [],
 	joinPermissionRequired: false,
-	async execute({ player, message }: CommandArgs): Promise<Message> {
+	async execute({ client, player, message }: CommandArgs): Promise<Message> {
 		if (
 			player.queue.size === 0 ||
 			(player.position === 0 && !player.playing)
@@ -35,9 +34,9 @@ const NowPlayingCommand: ICommand = {
 			};
 			description = `${
 				"─".repeat(part) + "⚪" + "─".repeat(30 - part)
-			}\n\n\`${formatDuration(positionObj)} / ${formatDuration(
-				totalDurationObj,
-			)}\``;
+			}\n\n\`${client.functions.formatDuration(
+				positionObj,
+			)} / ${client.functions.formatDuration(totalDurationObj)}\``;
 		}
 
 		const embed = new MessageEmbed()

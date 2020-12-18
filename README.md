@@ -1,2 +1,3 @@
 # 4803
-- 🎧 A simple music bot built using ErelaJS and Lavalink. (WIP)
+
+-   🎧 A simple music bot built using ErelaJS and Lavalink. (WIP)

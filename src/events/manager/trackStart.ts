@@ -1,7 +1,5 @@
 import { MessageEmbed, TextChannel } from "discord.js";
-import { IManagerEvent } from "my-module";
-import { LooseObject } from "../../struct/Core";
-import { formatTime } from "../../struct/Functions";
+import { IManagerEvent, LooseObject } from "my-module";
 
 const TrackStartEvent: IManagerEvent = {
 	name: "trackStart",
@@ -22,7 +20,7 @@ const TrackStartEvent: IManagerEvent = {
 			.setDescription(
 				`:musical_note: ${
 					track.title
-				} :musical_note:\n\nSong Length: **${formatTime(
+				} :musical_note:\n\nSong Length: **${client.functions.formatTime(
 					track.duration,
 					true,
 				)}**`,

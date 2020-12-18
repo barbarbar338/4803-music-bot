@@ -3,8 +3,8 @@ import { IManagerEvent } from "my-module";
 
 const NodeErrorEvent: IManagerEvent = {
 	name: "nodeError",
-	async execute(_client, _manager, node: Node, error) {
-		console.error(
+	async execute(client, _manager, node: Node, error) {
+		client.logger.error(
 			`Node error: ${node.options.identifier} => ${error.message}`,
 		);
 	},

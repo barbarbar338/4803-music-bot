@@ -33,4 +33,7 @@ declare module "my-module" {
 			...args: any[]
 		) => Promise<unknown>;
 	}
+	export interface LooseObject {
+		[key: string]: unknown;
+	}
 }

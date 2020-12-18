@@ -6,10 +6,8 @@ import { ICommand } from "my-module";
 import { resolve } from "path";
 
 import CONFIG from "../config";
-
-export interface LooseObject {
-	[key: string]: unknown;
-}
+import Logger from "./Logger";
+import * as Functions from "./Functions";
 
 export class Core extends Client {
 	public token = CONFIG.TOKEN;
@@ -21,6 +19,8 @@ export class Core extends Client {
 		},
 	});
 	public commands = new Collection<string, ICommand>();
+	public logger = Logger;
+	public functions = Functions;
 
 	private async importCommands(): Promise<void> {
 		const files = readdirSync(resolve(__dirname, "..", "commands"));
@@ -29,7 +29,7 @@ export class Core extends Client {
 				await import(resolve(__dirname, "..", "commands", file))
 			).default;
 			this.commands.set(command.name, command);
-			console.log(`[Loading Command]: ${command.name}`);
+			this.logger.info(`Loading command ${command.name}`);
 		}
 	}
 
@@ -40,7 +40,7 @@ export class Core extends Client {
 				await import(resolve(__dirname, "..", "events", "client", file))
 			).default;
 			this.on(event.name, (...args) => event.execute(this, ...args));
-			console.log(`[Loading Event]: ${event.name}`);
+			this.logger.info(`Loading event ${event.name}`);
 		}
 	}
 
@@ -57,14 +57,16 @@ export class Core extends Client {
 			this.manager.on(event.name, (...args) =>
 				event.execute(this, this.manager, ...args),
 			);
-			console.log(`[Loading Manager Event]: ${event.name}`);
+			this.logger.info(`Loading manager event ${event.name}`);
 		}
 	}
 
 	public async connect(): Promise<string> {
+		this.logger.info("Loading files");
 		await this.importEvents();
 		await this.importManagerEvents();
 		await this.importCommands();
+		this.logger.info("Connecting to Discord API");
 		return this.login(CONFIG.TOKEN);
 	}
 }

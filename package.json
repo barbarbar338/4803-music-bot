@@ -9,24 +9,27 @@
 	},
 	"license": "MPL-2.0",
 	"scripts": {
-		"prebuild": "rimraf dist",
-		"build": "tsc && copyfiles \"./lavalink/*\" \"./dist/\"",
+		"prebuild": "rimraf dist && rimraf application.yaml",
+		"build": "tsc && yarn scripts:createLavalinkConfig",
 		"format": "prettier --write .",
 		"format:watch": "onchange . -- prettier --write {{changed}}",
-		"start": "concurrently \"yarn start:lavalink-prod\" \"node dist\"",
+		"start": "concurrently \"yarn scripts:lavalink\" \"node dist/src\"",
 		"start:dev": "nodemon",
-		"start:lavalink-dev": "ts-node lavalink",
-		"start:lavalink-prod": "node dist/lavalink"
+		"scripts:lavalink": "node dist/scripts/lavalink",
+		"scripts:createLavalinkConfig": "node dist/scripts/createLavalinkConfig"
 	},
 	"dependencies": {
 		"bargs": "^1.0.1",
 		"concurrently": "^5.3.0",
-		"copyfiles": "^2.4.1",
 		"discord.js": "^12.5.1",
 		"dotenv": "^8.2.0",
-		"erela.js": "^2.3.0"
+		"erela.js": "^2.3.0",
+		"mongoose": "^5.11.8",
+		"winston": "^3.3.3",
+		"yaml": "^1.10.0"
 	},
 	"devDependencies": {
+		"@types/mongoose": "^5.10.3",
 		"@types/node": "^14.14.14",
 		"@typescript-eslint/eslint-plugin": "^4.10.0",
 		"@typescript-eslint/parser": "^4.10.0",

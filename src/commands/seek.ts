@@ -1,6 +1,5 @@
 import { Message } from "discord.js";
 import { CommandArgs, ICommand } from "my-module";
-import { parseTime } from "../struct/Functions";
 
 const SeekCommand: ICommand = {
 	name: "seek",
@@ -11,14 +10,19 @@ const SeekCommand: ICommand = {
 		{ name: "time", aliases: ["t"], default: true, type: String },
 	],
 	joinPermissionRequired: false,
-	async execute({ player, message, args }: CommandArgs): Promise<Message> {
+	async execute({
+		client,
+		player,
+		message,
+		args,
+	}: CommandArgs): Promise<Message> {
 		if (
 			player.queue.size === 0 ||
 			(player.position === 0 && !player.playing)
 		)
 			return message.channel.send("**Nothing Playing In This Server!**");
 
-		const timestampInMS = parseTime(args.time as string);
+		const timestampInMS = client.functions.parseTime(args.time as string);
 
 		if (timestampInMS === null)
 			return message.channel.send(

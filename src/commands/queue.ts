@@ -1,6 +1,5 @@
 import { Message } from "discord.js";
 import { CommandArgs, ICommand } from "my-module";
-import { generateQueueEmbed } from "../struct/Functions";
 
 const QueueCommand: ICommand = {
 	name: "queue",
@@ -17,7 +16,11 @@ const QueueCommand: ICommand = {
 			return message.channel.send("**Nothing Playing In This Server!**");
 
 		let currentPage = 0;
-		const embeds = generateQueueEmbed(client, message, player.queue);
+		const embeds = client.functions.generateQueueEmbed(
+			client,
+			message,
+			player.queue,
+		);
 		const queueEmbed = await message.channel.send(
 			`**Current Page - ${currentPage + 1}/${embeds.length}**`,
 			embeds[currentPage],

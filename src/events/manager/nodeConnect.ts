@@ -3,8 +3,8 @@ import { IManagerEvent } from "my-module";
 
 const NodeConnectEvent: IManagerEvent = {
 	name: "nodeConnect",
-	async execute(_client, _manager, node: Node) {
-		console.info(`Node "${node.options.identifier}" connected`);
+	async execute(client, _manager, node: Node) {
+		client.logger.info(`Node "${node.options.identifier}" connected`);
 	},
 };
 

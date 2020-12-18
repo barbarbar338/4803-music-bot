@@ -4,7 +4,7 @@ const ReadyEvent: IEvent = {
 	name: "ready",
 	async execute(client) {
 		client.manager.init(client.user.id);
-		console.info(`[${client.user.username}]: Logged in!`);
+		client.logger.info(`Logged in as ${client.user.username}`);
 	},
 };
 
