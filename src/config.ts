@@ -38,6 +38,8 @@ const CONFIG = {
 	INVITE:
 		"https://discord.com/oauth2/authorize?client_id={CLIENT_ID}&scope=bot&permissions=66374744",
 	SUPPORT_SERVER: process.env.SUPPORT_SERVER,
+	GITHUB_REPO: process.env.GITHUB_REPO,
+	CROWDIN_PROJECT: process.env.CROWDIN_PROJECT,
 };
 
 export default CONFIG;

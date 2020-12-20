@@ -21,3 +21,4 @@ volume_description: Adjusts the sound level.
 help_description: Gives information about commands.
 prefix_description: Changes the preferred prefix of your server.
 language_description: Changes the preferred language of your server.
+info_description: Gives information about the bot.

@@ -1,6 +1,7 @@
 queue_empty: Server song queue is empty. How about adding a few songs with the `%{prefix}play` command?
 song_not_found: Song not found.
 no_admin_perm: You need `ADMINISTRATOR` permission to use this command.
+click: Click
 bass_boost_set: Bass boost level set to %{level}.
 join_joined: Connected.
 join_another_channel: I'm on another channel. How about you come to me?
@@ -53,3 +54,9 @@ language_reset: Your server's preferred language has been successfully reset.
 language_define: Specify your server's preferred language.
 language_update: Your server's preferred language has been successfully updated.
 language_not_found: "The language you specified was not found. Available languages: `%{languages}`"
+info_title: Thanks for choosing %{bot_name} bot
+info_description: "%{bot_name} is a dedicated music bot. This bot offers you only music commands to avoid confusion."
+info_support_server: Support server
+info_invite: Invite bot
+info_github: Help us to develop
+info_crowdin: Help us to translate
