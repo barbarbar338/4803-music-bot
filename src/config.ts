@@ -7,18 +7,16 @@ dotenv.config();
 const SHARD_COUNT = 2;
 
 const LAVALINK = {
-	host: "localhost",
-	port: 2333,
-	password: "changeyourpassword",
+	host: process.env.LAVALINK_HOST,
+	port: parseInt(process.env.LAVALINK_PORT),
+	password: process.env.LAVALINK_PASSWORD,
 };
 
 const CONFIG = {
 	TOKEN: process.env.TOKEN,
 	ERELA: {
 		autoplay: true,
-		nodes: [
-			LAVALINK
-		],
+		nodes: [LAVALINK],
 		shards: SHARD_COUNT,
 	},
 	PREFIX: "!",
