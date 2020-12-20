@@ -1,6 +1,6 @@
 import { MessageEmbed, TextChannel } from "discord.js";
 import { IManagerEvent, LooseObject } from "my-module";
-import { GuildModel } from "src/models/guildModel";
+import { GuildModel } from "../../models/guildModel";
 
 const TrackStartEvent: IManagerEvent = {
 	name: "trackStart",

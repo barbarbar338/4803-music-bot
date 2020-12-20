@@ -76,7 +76,7 @@ export function generateQueueEmbed(
 	client: Core,
 	message: Message,
 	queue: Queue,
-) {
+): MessageEmbed[] {
 	const embeds = [];
 	const size = queue.size === 0 && queue.current !== null ? 1 : queue.size;
 	let k = 10;

@@ -15,14 +15,19 @@ const PlayCommand: ICommand = {
 	joinPermissionRequired: true,
 	playerRequired: false,
 	sameChannelRequired: false,
+	noEmptyQueue: false,
 	async execute({
 		manager,
 		message,
 		args,
 		vc,
+		client,
+		language,
 	}: CommandArgs): Promise<Message> {
 		if (!args.query)
-			return message.reply("you need to give me a URL or a search term.");
+			return message.channel.send(
+				client.i18n.get(language, "commands", "play_no_search_term"),
+			);
 
 		const player = manager.create({
 			guild: message.guild.id,
@@ -42,24 +47,30 @@ const PlayCommand: ICommand = {
 				throw res.exception;
 			}
 		} catch (err) {
-			return message.reply(
-				`there was an error while searching: ${err.message}`,
+			return message.channel.send(
+				client.i18n.get(language, "commands", "play_search_error", {
+					message: err.message,
+				}),
 			);
 		}
 
 		switch (res.loadType) {
 			case "NO_MATCHES":
 				if (!player.queue.current) player.destroy();
-				return message.reply("there were no results found.");
+				return message.channel.send(
+					client.i18n.get(language, "commands", "play_no_matches"),
+				);
 			case "TRACK_LOADED":
 				player.queue.add(res.tracks[0]);
-
 				if (!player.playing && !player.paused && !player.queue.size)
 					player.play();
-				return message.reply(`enqueuing \`${res.tracks[0].title}\`.`);
+				return message.channel.send(
+					client.i18n.get(language, "commands", "play_enqueuing", {
+						song: res.tracks[0].title,
+					}),
+				);
 			case "PLAYLIST_LOADED":
 				player.queue.add(res.tracks);
-
 				if (
 					!player.playing &&
 					!player.paused &&
@@ -67,7 +78,15 @@ const PlayCommand: ICommand = {
 				)
 					player.play();
 				return message.reply(
-					`enqueuing playlist \`${res.playlist.name}\` with ${res.tracks.length} tracks.`,
+					client.i18n.get(
+						language,
+						"commands",
+						"play_enqueuing_playlist",
+						{
+							playlist: res.playlist.name,
+							tracks: res.tracks.length,
+						},
+					),
 				);
 			case "SEARCH_RESULT":
 				let max = 5,
@@ -82,7 +101,11 @@ const PlayCommand: ICommand = {
 					.map((track, index) => `${++index} - \`${track.title}\``)
 					.join("\n");
 
-				message.channel.send(results);
+				await message.channel.send(
+					results +
+						"\n\n" +
+						client.i18n.get(language, "commands", "play_cancel"),
+				);
 
 				try {
 					collected = await message.channel.awaitMessages(filter, {
@@ -92,20 +115,35 @@ const PlayCommand: ICommand = {
 					});
 				} catch (e) {
 					if (!player.queue.current) player.destroy();
-					return message.reply("you didn't provide a selection.");
+					return message.channel.send(
+						client.i18n.get(
+							language,
+							"commands",
+							"play_no_selection",
+						),
+					);
 				}
 
 				const first = collected.first().content;
 
-				if (first.toLowerCase() === "end") {
+				if (first.toLowerCase() === "cancel") {
 					if (!player.queue.current) player.destroy();
-					return message.channel.send("Cancelled selection.");
+					return message.channel.send(
+						client.i18n.get(language, "commands", "play_canceled"),
+					);
 				}
 
 				const index = Number(first) - 1;
 				if (index < 0 || index > max - 1)
-					return message.reply(
-						`the number you provided too small or too big (1-${max}).`,
+					return message.channel.send(
+						client.i18n.get(
+							language,
+							"commands",
+							"play_unexpected_track",
+							{
+								max: max.toString(),
+							},
+						),
 					);
 
 				const track = res.tracks[index];
@@ -113,7 +151,11 @@ const PlayCommand: ICommand = {
 
 				if (!player.playing && !player.paused && !player.queue.size)
 					player.play();
-				return message.reply(`enqueuing \`${track.title}\`.`);
+				return message.reply(
+					client.i18n.get(language, "commands", "play_enqueuing", {
+						song: track.title,
+					}),
+				);
 		}
 	},
 };

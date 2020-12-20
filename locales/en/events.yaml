@@ -1,13 +1,8 @@
-# events/client/message.ts
 message_player_required: There is no song playing on this server.
 message_channel_required: To use this command, you must enter a voice channel.
 message_same_channel_required: To use this command, you must enter the same channel as the bot.
 message_channel_no_perm: I am not allowed to join channel %{channel}.
 message_error: An error occured while executing command. Please try again later.
-
-# events/manager/queueEnd.ts
 queue_end: We reached the end of the playlist. You can add new songs with the `%{prefix}play` command!
-
-# events/manager/trackStart.ts
 track_start_embed_title: Now Playing
 track_start_embed_song_length: Song Length

@@ -8,9 +8,16 @@ const PingCommand: ICommand = {
 	joinPermissionRequired: false,
 	playerRequired: false,
 	sameChannelRequired: false,
-	async execute({ client, message }: CommandArgs): Promise<Message> {
+	noEmptyQueue: false,
+	async execute({
+		client,
+		message,
+		language,
+	}: CommandArgs): Promise<Message> {
 		return message.channel.send(
-			`:ping_pong: Pong! pingim ${client.ws.ping}ms`,
+			client.i18n.get(language, "commands", "ping_ping", {
+				ping: client.ws.ping.toFixed(2),
+			}),
 		);
 	},
 };

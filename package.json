@@ -10,10 +10,10 @@
 	"license": "MPL-2.0",
 	"scripts": {
 		"prebuild": "rimraf dist && rimraf application.yaml",
-		"build": "tsc && yarn scripts:createLavalinkConfig",
+		"build": "tsc && npm run scripts:createLavalinkConfig",
 		"format": "prettier --write .",
 		"format:watch": "onchange . -- prettier --write {{changed}}",
-		"start": "concurrently \"yarn scripts:lavalink\" \"node dist/src\"",
+		"start": "concurrently \"npm run scripts:lavalink\" \"node dist/src\"",
 		"start:dev": "nodemon",
 		"scripts:lavalink": "node dist/scripts/lavalink",
 		"scripts:createLavalinkConfig": "node dist/scripts/createLavalinkConfig"

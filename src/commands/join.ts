@@ -8,11 +8,14 @@ const JoinCommand: ICommand = {
 	joinPermissionRequired: true,
 	argsDefinitions: [],
 	playerRequired: false,
+	noEmptyQueue: false,
 	async execute({
 		manager,
 		message,
 		player,
 		vc,
+		client,
+		language,
 	}: CommandArgs): Promise<Message> {
 		if (!player || (player && player.state === "DISCONNECTED")) {
 			manager
@@ -23,15 +26,18 @@ const JoinCommand: ICommand = {
 					selfDeafen: true,
 				})
 				.connect();
-			return message.channel.send("**Connected**");
+			return message.channel.send(
+				client.i18n.get(language, "commands", "join_joined"),
+			);
 		} else if (!message.guild.me.voice.channel) {
 			message.guild.me.voice.channel.join();
-			return message.channel.send("**Connected**");
-		} else {
 			return message.channel.send(
-				"**I'm Connected To A Voice Channel!**",
+				client.i18n.get(language, "commands", "join_joined"),
 			);
-		}
+		} else
+			return message.channel.send(
+				client.i18n.get(language, "commands", "join_another_channel"),
+			);
 	},
 };
 

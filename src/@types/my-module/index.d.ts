@@ -7,6 +7,7 @@ declare module "my-module" {
 		player?: import("erela.js").Player;
 		vc?: import("discord.js").VoiceChannel;
 		language: string;
+		guildModel: import("../../models/guildModel").IGuildModel;
 	}
 	export interface ICommand {
 		name: string;
@@ -14,6 +15,7 @@ declare module "my-module" {
 		playerRequired: boolean;
 		sameChannelRequired: boolean;
 		joinPermissionRequired: boolean;
+		noEmptyQueue: boolean;
 		argsDefinitions: import("bargs").OptionDefinitions;
 		execute: (
 			commandArgs: CommandArgs,

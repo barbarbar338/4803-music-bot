@@ -1,0 +1,38 @@
+queue_empty: Server song queue is empty. How about adding a few songs with the `%{prefix}play` command?
+song_not_found: Song not found.
+
+bass_boost_set: Bass boost level set to %{level}.
+join_joined: Connected.
+join_another_channel: I'm on another channel. How about you come to me?
+leave_leaved: Disconnected.
+loopqueue_looped: 🔁 Looping the queue.
+loopqueue_unlooped: 🔁 Queue doesn't loop anymore.
+loopsong_looped: 🔁 Looping the song.
+loopsong_unlooped: 🔁 Song doesn't loop anymore.
+now_playing_live_stream: Live Stream
+pause_paused: ⏸ Paused.
+pause_already_paused: Song is already paused.
+ping_ping: 🏓 Pong! %{ping}ms.
+play_no_search_term: You need to give me a URL or a search term.
+play_search_error: "An error occured while searching: %{message}"
+play_no_matches: I could not find any results.
+play_enqueuing: Enqueuing `%{song}`.
+play_enqueuing_playlist: Enqueuing playlist `%{playlist}` with `%{tracks}` tracks.
+play_no_selection: Process is canceled because you did not specify an option.
+play_cancel: Type `cancel` to cancel the operation.
+play_canceled: Cancelled selection.
+play_unexpected_track: The number you provided too small or too big (1-%{max}).
+queue_current_page: Current Page
+resume_resumed: ▶️ Resumed.
+resume_not_paused: Song is not paused
+seek_seeked: ▶️ Seeked.
+seek_invalid_format: "Specify a valid time. Example: `%{prefix}seek -s 3 -m 2` - `%{prefix}seek -minutes 5 -hours 7`"
+seek_length: The time you specified is longer than the song length.
+shuffle_shuffled: Song queue shuffled.
+skip_skipped: Skipped `%{song}`.
+skip_to_specify_number: Specify the song number to skip.s
+skip_to_integer: Specify a valid positive number.
+skip_to_skipped: Skipped `%{length}` song(s).
+volume_current: Current volume `%{volume}`
+volume_range: Specify a number between 1 and 10.
+volume_set: Volume set to `%{volume}`

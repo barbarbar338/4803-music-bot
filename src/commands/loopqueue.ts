@@ -8,18 +8,23 @@ const LoopQueueCommand: ICommand = {
 	sameChannelRequired: true,
 	argsDefinitions: [],
 	joinPermissionRequired: false,
-	async execute({ message, player }: CommandArgs): Promise<Message> {
-		if (
-			player.queue.size === 0 ||
-			(player.position === 0 && !player.playing)
-		)
-			return message.channel.send("**Nothing Playing In This Server!**");
+	noEmptyQueue: true,
+	async execute({
+		message,
+		player,
+		client,
+		language,
+	}: CommandArgs): Promise<Message> {
 		if (!player.queueRepeat) {
 			player.setQueueRepeat(true);
-			return message.channel.send("**🔁 Queue Has Been Looped!**");
+			return message.channel.send(
+				client.i18n.get(language, "commands", "loopqueue_looped"),
+			);
 		} else {
 			player.setQueueRepeat(false);
-			return message.channel.send("**🔁 Queue Has Been Unlooped!**");
+			return message.channel.send(
+				client.i18n.get(language, "commands", "loopqueue_unlooped"),
+			);
 		}
 	},
 };

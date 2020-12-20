@@ -1,5 +1,6 @@
 import { Message } from "discord.js";
 import { CommandArgs, ICommand } from "my-module";
+import CONFIG from "../config";
 
 const SeekCommand: ICommand = {
 	name: "seek",
@@ -7,34 +8,72 @@ const SeekCommand: ICommand = {
 	channelRequired: true,
 	sameChannelRequired: true,
 	argsDefinitions: [
-		{ name: "time", aliases: ["t"], default: true, type: String },
+		{
+			name: "seconds",
+			aliases: ["s", "secs"],
+			default: false,
+			type: Number,
+		},
+		{
+			name: "minutes",
+			aliases: ["m", "mins"],
+			default: false,
+			type: Number,
+		},
+		{
+			name: "hours",
+			aliases: ["h", "hrs"],
+			default: false,
+			type: Number,
+		},
+		{
+			name: "days",
+			aliases: ["d", "dys"],
+			default: false,
+			type: Number,
+		},
 	],
 	joinPermissionRequired: false,
+	noEmptyQueue: true,
 	async execute({
 		client,
 		player,
 		message,
 		args,
+		language,
+		guildModel,
 	}: CommandArgs): Promise<Message> {
-		if (
-			player.queue.size === 0 ||
-			(player.position === 0 && !player.playing)
-		)
-			return message.channel.send("**Nothing Playing In This Server!**");
+		const { seconds, minutes, hours, days } = args;
+		if (seconds && minutes && hours && days)
+			return await message.channel.send(
+				client.i18n.get(language, "commands", "seek_invalid_format", {
+					prefix: guildModel.prefix || CONFIG.PREFIX,
+				}),
+			);
 
-		const timestampInMS = client.functions.parseTime(args.time as string);
+		let str: string;
+		if (seconds) str += `${seconds}s `;
+		if (minutes) str += `${minutes}m `;
+		if (hours) str += `${hours}h `;
+		if (days) str += `${days}d`;
+		str = str.trim();
 
+		const timestampInMS = client.functions.parseTime(str);
 		if (timestampInMS === null)
-			return message.channel.send(
-				`**Please Enter Time In This Format!\n\n\`\`\`css\n1s, 1m, 1h, 1d, 1w, 1month, 1y\`\`\`**`,
+			return await message.channel.send(
+				client.i18n.get(language, "commands", "seek_invalid_format", {
+					prefix: guildModel.prefix || CONFIG.PREFIX,
+				}),
 			);
 		if (timestampInMS > player.queue.current.duration || timestampInMS < 0)
 			return message.channel.send(
-				"**Cannot Seek Beyond Length Of Song!\nPlease Enter Time In This Format!\n\n```css\n1s, 1m, 1h, 1d, 1w, 1month, 1y```**",
+				client.i18n.get(language, "commands", "seek_length"),
 			);
 
 		player.seek(timestampInMS);
-		return message.channel.send("**▶️ Seeked!**");
+		return message.channel.send(
+			client.i18n.get(language, "commands", "seek_seeked"),
+		);
 	},
 };
 

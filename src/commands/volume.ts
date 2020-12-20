@@ -10,29 +10,33 @@ const VolumeCommand: ICommand = {
 	argsDefinitions: [
 		{ name: "volume", aliases: ["v"], default: true, type: Number },
 	],
-	async execute({ player, message, args }: CommandArgs): Promise<Message> {
-		if (
-			player.queue.size === 0 ||
-			(player.position === 0 && !player.playing)
-		)
-			return message.channel.send("**Nothing Playing In This Server!**");
-
+	noEmptyQueue: true,
+	async execute({
+		player,
+		message,
+		args,
+		client,
+		language,
+	}: CommandArgs): Promise<Message> {
 		const volume = args.volume as number;
-
 		if (!volume)
 			return message.channel.send(
-				`**Current Volume: \`${player.volume / 10}/10\`**`,
+				client.i18n.get(language, "commands", "volume_current", {
+					volume: `${player.volume / 10}/10`,
+				}),
 			);
 
-		if (isNaN(volume))
-			return message.channel.send(`**Please Enter A Positive Integer!**`);
+		if (isNaN(volume) || (volume > 11 && volume < 1))
+			return message.channel.send(
+				client.i18n.get(language, "commands", "volume_range"),
+			);
 
-		if (volume < 11 && volume > 0) {
-			player.setVolume(volume * 10);
-			return message.channel.send(`**Volume Set To: \`${volume}\`**`);
-		} else {
-			return message.channel.send("**Select Volume From 1-10**");
-		}
+		player.setVolume(volume * 10);
+		return message.channel.send(
+			client.i18n.get(language, "commands", "volume_set", {
+				volume: volume.toFixed(1),
+			}),
+		);
 	},
 };
 

@@ -14,10 +14,17 @@ const BassBoostCommand: ICommand = {
 	channelRequired: true,
 	sameChannelRequired: true,
 	joinPermissionRequired: false,
+	noEmptyQueue: false,
 	argsDefinitions: [
 		{ name: "level", aliases: ["lvl", "l"], type: String, default: true },
 	],
-	async execute({ message, args, player }: CommandArgs): Promise<Message> {
+	async execute({
+		client,
+		language,
+		message,
+		args,
+		player,
+	}: CommandArgs): Promise<Message> {
 		let level = "none";
 		if (args.level && (args.level as string).toLowerCase() in levels)
 			level = (args.level as string).toLowerCase();
@@ -28,7 +35,11 @@ const BassBoostCommand: ICommand = {
 
 		player.setEQ(...bands);
 
-		return message.reply(`set the bassboost level to ${level}`);
+		return message.channel.send(
+			client.i18n.get(language, "commands", "bass_boost_set", {
+				level,
+			}),
+		);
 	},
 };
 

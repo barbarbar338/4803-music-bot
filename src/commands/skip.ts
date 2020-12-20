@@ -8,15 +8,18 @@ const SkipCommand: ICommand = {
 	channelRequired: true,
 	argsDefinitions: [],
 	joinPermissionRequired: false,
-	async execute({ player, message }: CommandArgs): Promise<Message> {
-		if (
-			player.queue.size === 0 ||
-			(player.position === 0 && !player.playing)
-		)
-			return message.channel.send("**Nothing Playing In This Server!**");
+	noEmptyQueue: true,
+	async execute({
+		player,
+		message,
+		client,
+		language,
+	}: CommandArgs): Promise<Message> {
 		player.stop();
 		return message.channel.send(
-			`**Skipped ${player.queue.current.title}**`,
+			client.i18n.get(language, "commands", "skip_skipped", {
+				song: player.queue.current.title,
+			}),
 		);
 	},
 };

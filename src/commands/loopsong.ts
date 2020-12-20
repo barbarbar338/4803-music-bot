@@ -8,19 +8,23 @@ const LoopSongCommand: ICommand = {
 	sameChannelRequired: true,
 	argsDefinitions: [],
 	joinPermissionRequired: false,
-	async execute({ player, message }: CommandArgs): Promise<Message> {
-		if (
-			player.queue.size === 0 ||
-			(player.position === 0 && !player.playing)
-		)
-			return message.channel.send("**Nothing Playing In This Server!**");
-
+	noEmptyQueue: true,
+	async execute({
+		player,
+		message,
+		client,
+		language,
+	}: CommandArgs): Promise<Message> {
 		if (!player.trackRepeat) {
 			player.setTrackRepeat(true);
-			return message.channel.send("**🔁 Song Has Been Looped!**");
+			return message.channel.send(
+				client.i18n.get(language, "commands", "loopsong_looped"),
+			);
 		} else {
 			player.setTrackRepeat(false);
-			return message.channel.send("**🔁 Song Has Been Unlooped!**");
+			return message.channel.send(
+				client.i18n.get(language, "commands", "loopsong_unlooped"),
+			);
 		}
 	},
 };

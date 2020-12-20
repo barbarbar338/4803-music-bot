@@ -8,13 +8,23 @@ const LeaveCommand: ICommand = {
 	sameChannelRequired: true,
 	argsDefinitions: [],
 	joinPermissionRequired: false,
-	async execute({ player, message }: CommandArgs): Promise<Message> {
+	noEmptyQueue: false,
+	async execute({
+		player,
+		message,
+		client,
+		language,
+	}: CommandArgs): Promise<Message> {
 		if (player) {
 			player.destroy();
-			return message.channel.send("**Disconnected**");
+			return message.channel.send(
+				client.i18n.get(language, "commands", "leave_leaved"),
+			);
 		} else if (message.guild.me.voice.channel) {
 			message.guild.me.voice.channel.leave();
-			return message.channel.send("**Disconnected**");
+			return message.channel.send(
+				client.i18n.get(language, "commands", "leave_leaved"),
+			);
 		}
 	},
 };

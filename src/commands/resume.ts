@@ -1,5 +1,6 @@
 import { Message } from "discord.js";
 import { CommandArgs, ICommand } from "my-module";
+import CONFIG from "../config";
 
 const ResumeCommand: ICommand = {
 	name: "resume",
@@ -8,15 +9,30 @@ const ResumeCommand: ICommand = {
 	channelRequired: true,
 	sameChannelRequired: true,
 	joinPermissionRequired: false,
-	async execute({ player, message }: CommandArgs): Promise<Message> {
+	noEmptyQueue: false,
+	async execute({
+		player,
+		message,
+		client,
+		language,
+		guildModel,
+	}: CommandArgs): Promise<Message> {
 		if (player.queue.size === 0 || player.position === 0)
-			return message.channel.send("**Nothing Playing In This Server!**");
+			return message.channel.send(
+				client.i18n.get(language, "commands", "queue_empty", {
+					prefix: guildModel.prefix || CONFIG.PREFIX,
+				}),
+			);
 
 		if (!player.playing) {
 			player.pause(false);
-			return message.channel.send("▶️ **Resumed**");
+			return message.channel.send(
+				client.i18n.get(language, "commands", "resume_resumed"),
+			);
 		}
-		return message.channel.send("**Song Is Not Paused!**");
+		return message.channel.send(
+			client.i18n.get(language, "commands", "resume_not_paused"),
+		);
 	},
 };
 

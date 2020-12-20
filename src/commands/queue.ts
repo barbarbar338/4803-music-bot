@@ -8,13 +8,13 @@ const QueueCommand: ICommand = {
 	playerRequired: true,
 	argsDefinitions: [],
 	joinPermissionRequired: false,
-	async execute({ client, message, player }: CommandArgs): Promise<Message> {
-		if (
-			player.queue.size === 0 ||
-			(player.position === 0 && !player.playing)
-		)
-			return message.channel.send("**Nothing Playing In This Server!**");
-
+	noEmptyQueue: true,
+	async execute({
+		client,
+		message,
+		player,
+		language,
+	}: CommandArgs): Promise<Message> {
 		let currentPage = 0;
 		const embeds = client.functions.generateQueueEmbed(
 			client,
@@ -22,7 +22,11 @@ const QueueCommand: ICommand = {
 			player.queue,
 		);
 		const queueEmbed = await message.channel.send(
-			`**Current Page - ${currentPage + 1}/${embeds.length}**`,
+			`**${client.i18n.get(
+				language,
+				"commands",
+				"queue_current_page",
+			)}**: ${currentPage + 1}/${embeds.length}`,
 			embeds[currentPage],
 		);
 		await queueEmbed.react("⬅️");
@@ -39,9 +43,11 @@ const QueueCommand: ICommand = {
 				if (currentPage < embeds.length - 1) {
 					currentPage++;
 					queueEmbed.edit(
-						`**Current Page - ${currentPage + 1}/${
-							embeds.length
-						}**`,
+						`**${client.i18n.get(
+							language,
+							"commands",
+							"queue_current_page",
+						)}**: ${currentPage + 1}/${embeds.length}`,
 						embeds[currentPage],
 					);
 				}
@@ -49,9 +55,11 @@ const QueueCommand: ICommand = {
 				if (currentPage !== 0) {
 					--currentPage;
 					queueEmbed.edit(
-						`**Current Page - ${currentPage + 1}/${
-							embeds.length
-						}**`,
+						`**${client.i18n.get(
+							language,
+							"commands",
+							"queue_current_page",
+						)}**: ${currentPage + 1}/${embeds.length}`,
 						embeds[currentPage],
 					);
 				}

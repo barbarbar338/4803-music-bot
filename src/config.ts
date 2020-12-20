@@ -25,7 +25,7 @@ const CONFIG = {
 	LAVALINK,
 	I18N: {
 		defaultLocale: "en",
-		directory: resolve(__dirname, "locales"),
+		directory: resolve("locales"),
 	},
 	MONGODB_URI: process.env.MONGODB_URI,
 };

@@ -10,43 +10,48 @@ const SkipToCommand: ICommand = {
 	argsDefinitions: [
 		{ name: "skip", aliases: ["s"], default: true, type: Number },
 	],
-	async execute({ player, message, args }: CommandArgs): Promise<Message> {
-		if (
-			player.queue.size === 0 ||
-			(player.position === 0 && !player.playing)
-		)
-			return message.channel.send("**Nothing Playing In This Server!**");
-
+	noEmptyQueue: true,
+	async execute({
+		player,
+		message,
+		args,
+		client,
+		language,
+	}: CommandArgs): Promise<Message> {
 		if (!args.skip)
 			return message.channel.send(
-				"**Please Enter The Song Number To Skip!**",
+				client.i18n.get(language, "commands", "skip_to_specify_number"),
 			);
 
 		const position = args.skip as number;
 
 		if (isNaN(position) || position < 1)
 			return message.channel.send(
-				"**Please Enter A Positive Integer Number!**",
+				client.i18n.get(language, "commands", "skip_to_integer"),
 			);
 		if (
 			position > player.queue.size ||
 			!player.queue[player.queue.size > 1 ? position - 2 : position - 1]
 		)
-			return message.channel.send("**Song Not Found!**");
+			return message.channel.send(
+				client.i18n.get(language, "commands", "song_not_found"),
+			);
 
 		if (position > 1 && player.queue.size != position) {
 			player.queue.splice(0, position - 2);
 			player.stop();
 			return message.channel.send(
-				`**Skipped \`${
-					position - 1 === 1 ? "1 Song" : `${position - 1} Songs`
-				}\`**`,
+				client.i18n.get(language, "commands", "skip_to_skipped", {
+					length: (position - 1).toString(),
+				}),
 			);
 		} else if (position > 1 && player.queue.size == position) {
 			player.queue.splice(0, player.queue.length - 1);
 			player.stop();
 			return message.channel.send(
-				`**Skipped \`${position - 1} Songs\`**`,
+				client.i18n.get(language, "commands", "skip_to_skipped", {
+					length: (position - 1).toString(),
+				}),
 			);
 		}
 	},

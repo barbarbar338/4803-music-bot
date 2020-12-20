@@ -1,7 +1,7 @@
 import { TextChannel, VoiceChannel } from "discord.js";
 import { IManagerEvent } from "my-module";
-import CONFIG from "src/config";
-import { GuildModel } from "src/models/guildModel";
+import CONFIG from "../../config";
+import { GuildModel } from "../../models/guildModel";
 
 const QueueEndEvent: IManagerEvent = {
 	name: "queueEnd",

@@ -8,19 +8,23 @@ const NowPlayingCommand: ICommand = {
 	sameChannelRequired: true,
 	argsDefinitions: [],
 	joinPermissionRequired: false,
-	async execute({ client, player, message }: CommandArgs): Promise<Message> {
-		if (
-			player.queue.size === 0 ||
-			(player.position === 0 && !player.playing)
-		)
-			return message.channel.send("**Nothing Playing In This Server!**");
-
+	noEmptyQueue: true,
+	async execute({
+		client,
+		player,
+		message,
+		language,
+	}: CommandArgs): Promise<Message> {
 		const video = player.queue.current;
 		let description;
 
-		if (video.isStream) {
-			description = "Live Stream";
-		} else {
+		if (video.isStream)
+			description = client.i18n.get(
+				language,
+				"commands",
+				"now_playing_live_stream",
+			);
+		else {
 			const part = Math.floor((player.position / video.duration) * 30);
 			const positionObj = {
 				seconds: Math.floor((player.position / 1000) % 60),

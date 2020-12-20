@@ -60,6 +60,18 @@ const MessageEvent: IEvent = {
 				}),
 			);
 
+		if (
+			command.noEmptyQueue &&
+			player.queue.size === 0 &&
+			player.position === 0 &&
+			!player.playing
+		)
+			return message.channel.send(
+				client.i18n.get(language, "commands", "queue_empty", {
+					prefix: guildModel.prefix || CONFIG.PREFIX,
+				}),
+			);
+
 		const isSuccess = await command.execute({
 			client,
 			message,
@@ -68,6 +80,7 @@ const MessageEvent: IEvent = {
 			player,
 			vc: channel,
 			language,
+			guildModel,
 		});
 
 		if (!isSuccess)
