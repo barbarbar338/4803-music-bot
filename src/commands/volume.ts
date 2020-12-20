@@ -14,7 +14,7 @@ const VolumeCommand: ICommand = {
 	category: "category_util",
 	description: "volume_description",
 	usage: "volume [level]",
-	examples: [ "volume", "volume 2", "volume 1", "volume 10" ],
+	examples: ["volume", "volume 2", "volume 1", "volume 10"],
 	async execute({
 		player,
 		message,

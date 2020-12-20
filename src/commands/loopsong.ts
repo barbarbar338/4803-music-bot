@@ -12,7 +12,7 @@ const LoopSongCommand: ICommand = {
 	category: "category_util",
 	description: "loopsong_description",
 	usage: "loopsong",
-	examples: [ "loopsong" ],
+	examples: ["loopsong"],
 	async execute({
 		player,
 		message,

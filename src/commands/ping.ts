@@ -12,7 +12,7 @@ const PingCommand: ICommand = {
 	category: "category_help",
 	description: "ping_description",
 	usage: "ping",
-	examples: [ "ping" ],
+	examples: ["ping"],
 	async execute({
 		client,
 		message,

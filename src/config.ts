@@ -35,8 +35,9 @@ const CONFIG = {
 		afk: false,
 		status: "dnd" as PresenceStatusData,
 	},
-	INVITE: "https://discord.com/oauth2/authorize?client_id={CLIENT_ID}&scope=bot&permissions=66374744",
-	SUPPORT_SERVER: process.env.SUPPORT_SERVER
+	INVITE:
+		"https://discord.com/oauth2/authorize?client_id={CLIENT_ID}&scope=bot&permissions=66374744",
+	SUPPORT_SERVER: process.env.SUPPORT_SERVER,
 };
 
 export default CONFIG;

@@ -12,7 +12,7 @@ const SkipCommand: ICommand = {
 	category: "category_music",
 	description: "skip_description",
 	usage: "skip",
-	examples: [ "skip" ],
+	examples: ["skip"],
 	async execute({
 		player,
 		message,

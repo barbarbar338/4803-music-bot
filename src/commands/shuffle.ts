@@ -12,7 +12,7 @@ const ShuffleCommand: ICommand = {
 	category: "category_util",
 	description: "shuffle_description",
 	usage: "shuffle",
-	examples: [ "shuffle" ],
+	examples: ["shuffle"],
 	async execute({
 		player,
 		message,

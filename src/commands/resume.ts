@@ -13,7 +13,7 @@ const ResumeCommand: ICommand = {
 	category: "category_music",
 	description: "resume_description",
 	usage: "resume",
-	examples: [ "resume" ],
+	examples: ["resume"],
 	async execute({
 		player,
 		message,

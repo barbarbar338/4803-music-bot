@@ -19,7 +19,7 @@ const PlayCommand: ICommand = {
 	category: "category_music",
 	description: "play_description",
 	usage: "play <search_term>",
-	examples: [ "play bohemian rhapsody", "play https://youtu.be/fJ9rUzIMcZQ" ],
+	examples: ["play bohemian rhapsody", "play https://youtu.be/fJ9rUzIMcZQ"],
 	async execute({
 		manager,
 		message,

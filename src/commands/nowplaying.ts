@@ -12,7 +12,7 @@ const NowPlayingCommand: ICommand = {
 	category: "category_util",
 	description: "nowplaying_description",
 	usage: "nowplaying",
-	examples: [ "nowplaying" ],
+	examples: ["nowplaying"],
 	async execute({
 		client,
 		player,

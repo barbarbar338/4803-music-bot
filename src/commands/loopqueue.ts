@@ -12,7 +12,7 @@ const LoopQueueCommand: ICommand = {
 	category: "category_util",
 	description: "loopqueue_description",
 	usage: "loopqueue",
-	examples: [ "loopqueue" ],
+	examples: ["loopqueue"],
 	async execute({
 		message,
 		player,

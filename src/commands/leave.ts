@@ -12,7 +12,7 @@ const LeaveCommand: ICommand = {
 	category: "category_music",
 	description: "leave_description",
 	usage: "leave",
-	examples: [ "leave" ],
+	examples: ["leave"],
 	async execute({
 		player,
 		message,

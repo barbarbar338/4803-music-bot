@@ -13,7 +13,7 @@ const PauseCommand: ICommand = {
 	category: "category_music",
 	description: "pause_description",
 	usage: "pause",
-	examples: [ "pause" ],
+	examples: ["pause"],
 	async execute({
 		player,
 		message,

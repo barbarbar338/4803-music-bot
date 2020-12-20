@@ -12,7 +12,7 @@ const JoinCommand: ICommand = {
 	category: "category_music",
 	description: "join_description",
 	usage: "join",
-	examples: [ "join" ],
+	examples: ["join"],
 	async execute({
 		manager,
 		message,

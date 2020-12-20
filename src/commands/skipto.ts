@@ -14,7 +14,7 @@ const SkipToCommand: ICommand = {
 	category: "category_util",
 	description: "skipto_description",
 	usage: "skipto",
-	examples: [ "skipto 5", "skipto 2" ],
+	examples: ["skipto 5", "skipto 2"],
 	async execute({
 		player,
 		message,
