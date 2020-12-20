@@ -1,7 +1,10 @@
+import { ActivityType, PresenceStatusData } from "discord.js";
 import * as dotenv from "dotenv";
 import { resolve } from "path";
 
 dotenv.config();
+
+const SHARD_COUNT = 2;
 
 const LAVALINK = {
 	host: "localhost",
@@ -14,12 +17,9 @@ const CONFIG = {
 	ERELA: {
 		autoplay: true,
 		nodes: [
-			{
-				host: LAVALINK.host,
-				password: LAVALINK.password,
-				port: LAVALINK.port,
-			},
+			LAVALINK
 		],
+		shards: SHARD_COUNT,
 	},
 	PREFIX: "!",
 	LAVALINK,
@@ -28,6 +28,15 @@ const CONFIG = {
 		directory: resolve("locales"),
 	},
 	MONGODB_URI: process.env.MONGODB_URI,
+	SHARD_COUNT,
+	PRESENCE: {
+		activity: {
+			name: "Songs",
+			type: "LISTENING" as ActivityType,
+		},
+		afk: false,
+		status: "dnd" as PresenceStatusData,
+	},
 };
 
 export default CONFIG;

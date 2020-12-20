@@ -25,6 +25,13 @@ export class Core extends Client {
 	public functions = Functions;
 	public i18n = new I18n(CONFIG.I18N);
 
+	constructor() {
+		super({
+			shardCount: CONFIG.SHARD_COUNT,
+			presence: CONFIG.PRESENCE,
+		});
+	}
+
 	private async importCommands(): Promise<void> {
 		const files = readdirSync(resolve(__dirname, "..", "commands"));
 		for (const file of files) {
