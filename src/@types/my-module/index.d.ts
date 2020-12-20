@@ -43,4 +43,7 @@ declare module "my-module" {
 	export interface LooseObject {
 		[key: string]: unknown;
 	}
+	export interface Categories {
+		[category: string]: ICommand[];
+	}
 }

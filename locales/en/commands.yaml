@@ -1,6 +1,6 @@
 queue_empty: Server song queue is empty. How about adding a few songs with the `%{prefix}play` command?
 song_not_found: Song not found.
-
+no_admin_perm: You need `ADMINISTRATOR` permission to use this command.
 bass_boost_set: Bass boost level set to %{level}.
 join_joined: Connected.
 join_another_channel: I'm on another channel. How about you come to me?
@@ -36,3 +36,20 @@ skip_to_skipped: Skipped `%{length}` song(s).
 volume_current: Current volume `%{volume}`
 volume_range: Specify a number between 1 and 10.
 volume_set: Volume set to `%{volume}`
+help_command_not_found: Command `%{command}` not found.
+help_command_title: Information about %{command}
+help_command_name: "Name:"
+help_command_description: "Description:"
+help_command_category: "Category:"
+help_command_usage: "Usage:"
+help_command_examples: "Examples:"
+help_all_commands: All Commands
+help_description: For more information about a command, use the `%{prefix}help command` command.
+prefix_reset: Your server's preferred prefix has been successfully reset.
+prefix_length: Your server's preferred prefix should be less than 5 characters.
+prefix_update: Your server's preferred prefix has been successfully updated. Try using `%{prefix}help` command to see effects.
+prefix_define: Specify your server's preferred prefix.
+language_reset: Your server's preferred language has been successfully reset.
+language_define: Specify your server's preferred language.
+language_update: Your server's preferred language has been successfully updated.
+language_not_found: "The language you specified was not found. Available languages: `%{languages}`"

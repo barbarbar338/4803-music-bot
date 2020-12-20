@@ -1,5 +1,4 @@
 {
-	"watch": ["src"],
-	"ext": "ts,json",
+	"ext": "ts,yaml",
 	"exec": "npm run prebuild:dev && npm run build:dev && node dist/src"
 }

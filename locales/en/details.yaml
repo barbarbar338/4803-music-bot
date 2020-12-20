@@ -1,6 +1,7 @@
 category_music: Music
 category_util: Utilities
 category_help: Help
+category_config: Configuration
 bassboost_description: Adjusts the bass boost level.
 join_description: Bot joins the channel you are on.
 leave_description: Bot leaves the channel you are on.
@@ -17,3 +18,6 @@ shuffle_description: Shuffles the song queue.
 skip_description: Skips current song.
 skipto_description: Skips to the song you specified.
 volume_description: Adjusts the sound level.
+help_description: Gives information about commands.
+prefix_description: Changes the preferred prefix of your server.
+language_description: Changes the preferred language of your server.
