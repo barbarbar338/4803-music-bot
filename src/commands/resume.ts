@@ -10,6 +10,10 @@ const ResumeCommand: ICommand = {
 	sameChannelRequired: true,
 	joinPermissionRequired: false,
 	noEmptyQueue: false,
+	category: "category_music",
+	description: "resume_description",
+	usage: "resume",
+	examples: [ "resume" ],
 	async execute({
 		player,
 		message,

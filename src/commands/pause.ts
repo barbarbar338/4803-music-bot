@@ -10,6 +10,10 @@ const PauseCommand: ICommand = {
 	argsDefinitions: [],
 	joinPermissionRequired: false,
 	noEmptyQueue: false,
+	category: "category_music",
+	description: "pause_description",
+	usage: "pause",
+	examples: [ "pause" ],
 	async execute({
 		player,
 		message,

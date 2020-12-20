@@ -11,6 +11,10 @@ const SkipToCommand: ICommand = {
 		{ name: "skip", aliases: ["s"], default: true, type: Number },
 	],
 	noEmptyQueue: true,
+	category: "category_util",
+	description: "skipto_description",
+	usage: "skipto",
+	examples: [ "skipto 5", "skipto 2" ],
 	async execute({
 		player,
 		message,

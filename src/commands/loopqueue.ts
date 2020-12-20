@@ -9,6 +9,10 @@ const LoopQueueCommand: ICommand = {
 	argsDefinitions: [],
 	joinPermissionRequired: false,
 	noEmptyQueue: true,
+	category: "category_util",
+	description: "loopqueue_description",
+	usage: "loopqueue",
+	examples: [ "loopqueue" ],
 	async execute({
 		message,
 		player,

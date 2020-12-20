@@ -17,6 +17,10 @@ declare module "my-module" {
 		joinPermissionRequired: boolean;
 		noEmptyQueue: boolean;
 		argsDefinitions: import("bargs").OptionDefinitions;
+		category: string;
+		description: string;
+		usage: string;
+		examples: string[];
 		execute: (
 			commandArgs: CommandArgs,
 		) => Promise<import("discord.js").Message>;

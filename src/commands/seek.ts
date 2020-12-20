@@ -35,6 +35,10 @@ const SeekCommand: ICommand = {
 	],
 	joinPermissionRequired: false,
 	noEmptyQueue: true,
+	category: "category_util",
+	description: "seek_description",
+	usage: "seek <[-s second] [-m minutes] [-h hours] [-d days]>",
+	examples: [ "seek -s 12", "seek -m 3", "seek -s 12 -m 5", "seek -d 3 -s 2" ],
 	async execute({
 		client,
 		player,

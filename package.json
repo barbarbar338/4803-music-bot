@@ -9,14 +9,16 @@
 	},
 	"license": "MPL-2.0",
 	"scripts": {
-		"prebuild": "rimraf dist && rimraf application.yaml",
-		"build": "tsc && npm run scripts:createLavalinkConfig",
+		"prebuild": "npm run prebuild:dev && rimraf application.yaml",
+		"prebuild:dev": "rimraf dist",
+		"build": "npm run build:dev && npm run createLavalinkConfig",
+		"build:dev": "tsc",
 		"format": "prettier --write .",
 		"format:watch": "onchange . -- prettier --write {{changed}}",
-		"start": "concurrently \"npm run scripts:lavalink\" \"node dist/src\"",
-		"start:dev": "nodemon",
-		"scripts:lavalink": "node dist/scripts/lavalink",
-		"scripts:createLavalinkConfig": "node dist/scripts/createLavalinkConfig"
+		"start": "concurrently \"npm run lavalink\" \"node dist/src\"",
+		"dev": "nodemon",
+		"lavalink": "node dist/scripts/lavalink",
+		"createLavalinkConfig": "node dist/scripts/createLavalinkConfig"
 	},
 	"dependencies": {
 		"bargs": "^1.0.1",

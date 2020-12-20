@@ -1,0 +1,19 @@
+category_music: Music
+category_util: Utilities
+category_help: Help
+bassboost_description: Adjusts the bass boost level.
+join_description: Bot joins the channel you are on.
+leave_description: Bot leaves the channel you are on.
+loopqueue_description: Loops the song queue.
+loopsong_description: Loops current song.
+nowplaying_description: Provides information about the song playing.
+pause_description: Pauses the song.
+ping_description: Shows the bot's ping.
+play_description: Plays the song you specified.
+queue_description: Shows the song queue.
+resume_description: Resumes the song.
+seek_description: Allows you to skip to the duration of the song you specified.
+shuffle_description: Shuffles the song queue.
+skip_description: Skips current song.
+skipto_description: Skips to the song you specified.
+volume_description: Adjusts the sound level.

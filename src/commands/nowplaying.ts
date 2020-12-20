@@ -9,6 +9,10 @@ const NowPlayingCommand: ICommand = {
 	argsDefinitions: [],
 	joinPermissionRequired: false,
 	noEmptyQueue: true,
+	category: "category_util",
+	description: "nowplaying_description",
+	usage: "nowplaying",
+	examples: [ "nowplaying" ],
 	async execute({
 		client,
 		player,

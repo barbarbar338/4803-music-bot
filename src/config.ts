@@ -4,7 +4,7 @@ import { resolve } from "path";
 
 dotenv.config();
 
-const SHARD_COUNT = 2;
+const SHARD_COUNT = parseInt(process.env.SHARD_COUNT);
 
 const LAVALINK = {
 	host: process.env.LAVALINK_HOST,
@@ -19,7 +19,7 @@ const CONFIG = {
 		nodes: [LAVALINK],
 		shards: SHARD_COUNT,
 	},
-	PREFIX: "!",
+	PREFIX: process.env.PREFIX,
 	LAVALINK,
 	I18N: {
 		defaultLocale: "en",
@@ -35,6 +35,8 @@ const CONFIG = {
 		afk: false,
 		status: "dnd" as PresenceStatusData,
 	},
+	INVITE: "https://discord.com/oauth2/authorize?client_id={CLIENT_ID}&scope=bot&permissions=66374744",
+	SUPPORT_SERVER: process.env.SUPPORT_SERVER
 };
 
 export default CONFIG;

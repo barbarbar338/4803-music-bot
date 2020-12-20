@@ -16,6 +16,10 @@ const PlayCommand: ICommand = {
 	playerRequired: false,
 	sameChannelRequired: false,
 	noEmptyQueue: false,
+	category: "category_music",
+	description: "play_description",
+	usage: "play <search_term>",
+	examples: [ "play bohemian rhapsody", "play https://youtu.be/fJ9rUzIMcZQ" ],
 	async execute({
 		manager,
 		message,

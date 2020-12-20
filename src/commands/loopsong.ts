@@ -9,6 +9,10 @@ const LoopSongCommand: ICommand = {
 	argsDefinitions: [],
 	joinPermissionRequired: false,
 	noEmptyQueue: true,
+	category: "category_util",
+	description: "loopsong_description",
+	usage: "loopsong",
+	examples: [ "loopsong" ],
 	async execute({
 		player,
 		message,

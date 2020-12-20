@@ -18,6 +18,10 @@ const BassBoostCommand: ICommand = {
 	argsDefinitions: [
 		{ name: "level", aliases: ["lvl", "l"], type: String, default: true },
 	],
+	category: "category_util",
+	description: "bassboost_description",
+	usage: "bassboost <level>",
+	examples: [ "bassboost none", "bassboost low", "bassboost medium", "bassboost high"],
 	async execute({
 		client,
 		language,

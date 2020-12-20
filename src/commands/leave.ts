@@ -9,6 +9,10 @@ const LeaveCommand: ICommand = {
 	argsDefinitions: [],
 	joinPermissionRequired: false,
 	noEmptyQueue: false,
+	category: "category_music",
+	description: "leave_description",
+	usage: "leave",
+	examples: [ "leave" ],
 	async execute({
 		player,
 		message,

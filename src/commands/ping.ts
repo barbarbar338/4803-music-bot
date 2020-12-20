@@ -9,6 +9,10 @@ const PingCommand: ICommand = {
 	playerRequired: false,
 	sameChannelRequired: false,
 	noEmptyQueue: false,
+	category: "category_help",
+	description: "ping_description",
+	usage: "ping",
+	examples: [ "ping" ],
 	async execute({
 		client,
 		message,

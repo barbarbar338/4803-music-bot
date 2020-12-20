@@ -9,6 +9,10 @@ const QueueCommand: ICommand = {
 	argsDefinitions: [],
 	joinPermissionRequired: false,
 	noEmptyQueue: true,
+	category: "category_music",
+	description: "queue_description",
+	usage: "queue",
+	examples: [ "queue" ],
 	async execute({
 		client,
 		message,

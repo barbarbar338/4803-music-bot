@@ -9,6 +9,10 @@ const SkipCommand: ICommand = {
 	argsDefinitions: [],
 	joinPermissionRequired: false,
 	noEmptyQueue: true,
+	category: "category_music",
+	description: "skip_description",
+	usage: "skip",
+	examples: [ "skip" ],
 	async execute({
 		player,
 		message,

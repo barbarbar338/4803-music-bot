@@ -9,6 +9,10 @@ const ShuffleCommand: ICommand = {
 	argsDefinitions: [],
 	joinPermissionRequired: false,
 	noEmptyQueue: false,
+	category: "category_util",
+	description: "shuffle_description",
+	usage: "shuffle",
+	examples: [ "shuffle" ],
 	async execute({
 		player,
 		message,
