@@ -6,3 +6,6 @@ message_error: An error occured while executing command. Please try again later.
 queue_end: We reached the end of the playlist. You can add new songs with the `%{prefix}play` command!
 track_start_embed_title: Now Playing
 track_start_embed_song_length: Song Length
+disconnected_from_channel: For being kicked off the channel, music stream stopped and queue cleared.
+channel_empty: I left the channel and cleared the queue because the channel was empty.
+player_muted: Stream paused because of someone muting me.

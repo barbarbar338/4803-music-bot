@@ -21,15 +21,21 @@
 		"createLavalinkConfig": "node dist/scripts/createLavalinkConfig"
 	},
 	"dependencies": {
+		"@discordjs/opus": "^0.3.3",
 		"bargs": "^1.0.1",
+		"bufferutil": "^4.0.2",
 		"concurrently": "^5.3.0",
 		"discord.js": "^12.5.1",
 		"dotenv": "^8.2.0",
 		"erela.js": "^2.3.0",
+		"erlpack": "discord/erlpack",
+		"libsodium-wrappers": "^0.7.8",
 		"locale-parser": "^1.1.2",
 		"mongoose": "^5.11.8",
+		"utf-8-validate": "^5.0.3",
 		"winston": "^3.3.3",
-		"yaml": "^1.10.0"
+		"yaml": "^1.10.0",
+		"zlib-sync": "^0.1.7"
 	},
 	"devDependencies": {
 		"@types/mongoose": "^5.10.3",

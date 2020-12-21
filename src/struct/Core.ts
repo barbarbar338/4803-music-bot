@@ -1,4 +1,9 @@
-import { Client, Collection } from "discord.js";
+import {
+	ActivityType,
+	Client,
+	Collection,
+	PresenceStatusData,
+} from "discord.js";
 import { Manager } from "erela.js";
 import { I18n } from "locale-parser";
 import { connect } from "mongoose";
@@ -28,7 +33,20 @@ export class Core extends Client {
 	constructor() {
 		super({
 			shardCount: CONFIG.SHARD_COUNT,
-			presence: CONFIG.PRESENCE,
+			presence: {
+				activity: {
+					name: Functions.random<string>(
+						CONFIG.PRESENCE.activity.name,
+					),
+					type: Functions.random<ActivityType>(
+						CONFIG.PRESENCE.activity.type,
+					),
+				},
+				afk: false,
+				status: Functions.random<PresenceStatusData>(
+					CONFIG.PRESENCE.status,
+				),
+			},
 		});
 	}
 
