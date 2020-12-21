@@ -5,7 +5,7 @@ import { resolve } from "path";
 dotenv.config();
 
 const SHARD_COUNT = parseInt(process.env.SHARD_COUNT);
-const PREFIX = process.env.PREFIX;
+const PREFIX = process.env.BOT_PREFIX;
 const LAVALINK = {
 	host: process.env.LAVALINK_HOST,
 	port: parseInt(process.env.LAVALINK_PORT),
@@ -45,7 +45,7 @@ const CONFIG = {
 		},
 		afk: false,
 		status: ["dnd", "idle", "online"] as PresenceStatusData[],
-		interval: 1000 * 5,
+		interval: 1000 * 15,
 	},
 	INVITE:
 		"https://discord.com/oauth2/authorize?client_id={CLIENT_ID}&scope=bot&permissions=66374744",
