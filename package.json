@@ -10,15 +10,21 @@
 	"license": "MPL-2.0",
 	"scripts": {
 		"prebuild": "npm run prebuild:dev && rimraf application.yaml",
-		"prebuild:dev": "rimraf dist",
 		"build": "npm run build:dev && npm run createLavalinkConfig",
+		"prebuild:dev": "rimraf dist",
 		"build:dev": "tsc",
 		"format": "prettier --write .",
 		"format:watch": "onchange . -- prettier --write {{changed}}",
-		"start": "concurrently \"npm run lavalink\" \"node dist/src\"",
-		"dev": "nodemon",
-		"lavalink": "node dist/scripts/lavalink",
-		"createLavalinkConfig": "node dist/scripts/createLavalinkConfig"
+		"pm2:lavalink": "pm2 start dist/scripts/lavalink.js --name \"Lavalink\"",
+		"pm2:bot": "pm2 start dist/src/index.js --name \"Bot\"",
+		"pm2:kill": "pm2 kill",
+		"start": "npm run pm2:lavalink && npm run pm2:bot",
+		"start:dev": "nodemon",
+		"start:bot": "node dist/src",
+		"start:lavalink": "node dist/scripts/lavalink",
+		"start:cross": "concurrently \"npm run start:lavalink\" \"npm run start:bot\"",
+		"createLavalinkConfig": "node dist/scripts/createLavalinkConfig",
+		"kill": "npm run pm2:kill"
 	},
 	"dependencies": {
 		"@discordjs/opus": "^0.3.3",
@@ -47,8 +53,13 @@
 		"eslint-plugin-import": "^2.22.1",
 		"nodemon": "^2.0.6",
 		"onchange": "^7.1.0",
+		"pm2": "^4.5.1",
 		"prettier": "^2.2.1",
 		"ts-node": "^9.1.1",
 		"typescript": "^4.1.3"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/barbarbar338/4803-music-bot"
 	}
 }
