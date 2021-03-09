@@ -15,9 +15,9 @@ app.use((req, res) => res.sendStatus(200));
 
 Manager.spawn().then(() => {
 	Logger.info("All shards spawned");
-    app.listen(CONFIG.PORT, "0.0.0.0", () => {
-        Logger.info("Express server started");
-    });
+	app.listen(CONFIG.PORT, "0.0.0.0", () => {
+		Logger.info("Express server started");
+	});
 });
 
 Manager.on("shardCreate", (shard) =>
