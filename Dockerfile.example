@@ -1,0 +1,57 @@
+# Base Image
+FROM debian
+
+# Labels
+LABEL maintainer="Barış DEMİRCİ, <demirci.baris38@gmail.com"
+LABEL version="1.0.0"
+LABEL description="🎧 A simple Discord music bot built using ErelaJS and Lavalink."
+
+# Update and download linux dependencies
+RUN apt-get update && apt-get install -y curl software-properties-common openjdk-11-jdk git make python gcc g++
+
+# Add NodeJS PPA
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
+
+# Install NodeJS
+RUN apt-get install -y nodejs && apt-get clean
+
+# Set environment variables
+ENV TOKEN=
+ENV MONGODB_URI=
+ENV LAVALINK_HOST=
+ENV LAVALINK_PORT=2333
+ENV LAVALINK_PASSWORD=
+ENV SHARD_COUNT=
+ENV SUPPORT_SERVER=
+ENV BOT_PREFIX=
+ENV GITHUB_REPO=
+ENV CROWDIN_PROJECT=
+ENV PORT=8080
+
+# Reserve ports
+EXPOSE 2333
+EXPOSE 8080
+
+# Set workdir
+WORKDIR /app
+
+# Copy required files
+ADD tsconfig.json . 
+ADD package.json .
+ADD Lavalink.jar .
+ADD src src
+ADD scripts scripts
+ADD locales locales
+
+# Download dependencies
+RUN npm i
+
+# Build bot
+RUN npm run build
+
+# Remove useless folders
+RUN rm -r src
+RUN rm -r scripts
+
+# Set container command
+CMD [ "npm", "run", "start:cross" ]

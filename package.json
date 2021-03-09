@@ -1,13 +1,14 @@
 {
 	"name": "erela.js-music-bot",
 	"version": "1.0.0",
-	"description": "🎧 A simple music bot built using ErelaJS and Lavalink. (WIP)",
+	"description": "🎧 A simple Discord music bot built using ErelaJS and Lavalink.",
 	"author": {
 		"email": "demirci.baris38@gmail.com",
 		"name": "Barış DEMİRCİ",
 		"url": "https://bariscodes.me"
 	},
 	"license": "MPL-2.0",
+	"private": true,
 	"scripts": {
 		"prebuild": "npm run prebuild:dev && rimraf application.yaml",
 		"build": "npm run build:dev && npm run createLavalinkConfig",
@@ -35,6 +36,7 @@
 		"dotenv": "^8.2.0",
 		"erela.js": "^2.3.0",
 		"erlpack": "discord/erlpack",
+		"express": "^4.17.1",
 		"libsodium-wrappers": "^0.7.8",
 		"locale-parser": "^1.1.2",
 		"mongoose": "^5.11.8",
@@ -44,6 +46,7 @@
 		"zlib-sync": "^0.1.7"
 	},
 	"devDependencies": {
+		"@types/express": "^4.17.11",
 		"@types/mongoose": "^5.10.3",
 		"@types/node": "^14.14.14",
 		"@typescript-eslint/eslint-plugin": "^4.10.0",

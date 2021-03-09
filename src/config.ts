@@ -52,6 +52,7 @@ const CONFIG = {
 	SUPPORT_SERVER: process.env.SUPPORT_SERVER,
 	GITHUB_REPO: process.env.GITHUB_REPO,
 	CROWDIN_PROJECT: process.env.CROWDIN_PROJECT,
+	PORT: parseInt(process.env.PORT)
 };
 
 export default CONFIG;
