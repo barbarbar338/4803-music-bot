@@ -1,4 +1,4 @@
-import { MessageEmbed, TextChannel } from "discord.js";
+import { EmbedBuilder, TextChannel } from "discord.js";
 import { IManagerEvent, LooseObject } from "my-module";
 import { GuildModel } from "../../models/guildModel";
 
@@ -24,7 +24,7 @@ const TrackStartEvent: IManagerEvent = {
 		const user = client.users.cache.get(
 			(track.requester as LooseObject).id as string,
 		);
-		const embed = new MessageEmbed()
+		const embed = new EmbedBuilder()
 			.setAuthor(
 				(track.requester as LooseObject).username,
 				user.displayAvatarURL({ dynamic: true }),

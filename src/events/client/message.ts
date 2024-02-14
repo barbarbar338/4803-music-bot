@@ -1,23 +1,24 @@
 import { bargs } from "bargs/dist";
-import { Message } from "discord.js";
+import { Message, VoiceChannel } from "discord.js";
 import { IEvent } from "my-module";
 import CONFIG from "../../config";
-import { GuildModel } from "../../models/guildModel";
+import { GuildModel, IGuildModel } from "../../models/guildModel";
 
 const MessageEvent: IEvent = {
 	name: "message",
 	async execute(client, message: Message) {
 		if (!message.content || !message.guild || message.author.bot) return;
 
-		let guildModel = await GuildModel.findOne({
+		let guildModel: IGuildModel | null = await GuildModel.findOne({
 			guildID: message.guild.id,
-		});
-		if (!guildModel) {
+		  });
+		  
+		  if (!guildModel) {
 			guildModel = await GuildModel.create({
-				guildID: message.guild.id,
-				language: "en",
+			  guildID: message.guild.id,
+			  language: "en",
 			});
-		}
+		  }
 		const { language, prefix: guildPrefix } = guildModel;
 
 		const prefix = guildPrefix || CONFIG.PREFIX;
@@ -33,32 +34,39 @@ const MessageEvent: IEvent = {
 
 		if (command.playerRequired && !player)
 			return message.channel.send(
-				client.i18n.get(language, "events", "message_player_required"),
+				{
+					content: `${client.i18n.get(language, "events", "message_player_required")}`
+				}
 			);
 		if (command.channelRequired && !channel)
 			return message.channel.send(
-				client.i18n.get(language, "events", "message_channel_required"),
+				{
+					content: `${client.i18n.get(language, "events", "message_channel_required")}`
+				}
 			);
 		if (
 			command.sameChannelRequired &&
 			(!player || channel.id !== player.voiceChannel)
 		)
 			return message.channel.send(
-				client.i18n.get(
-					language,
-					"events",
-					"message_same_channel_required",
-				),
+				{
+					content: `${client.i18n.get(
+						language,
+						"events",
+						"message_same_channel_required",
+					)}`
+				}
 			);
 		if (
 			command.joinPermissionRequired &&
-			!channel.permissionsFor(client.user).has("CONNECT")
+			!channel.permissionsFor(client.user).has("Connect")
 		)
-			return message.channel.send(
-				client.i18n.get(language, "events", "message_channel_no_perm", {
+			return message.channel.send({
+				content: `${client.i18n.get(language, "events", "message_channel_no_perm", {
 					channel: channel.toString(),
-				}),
-			);
+				})}}`
+			}
+		);
 
 		if (
 			command.noEmptyQueue &&
@@ -67,9 +75,11 @@ const MessageEvent: IEvent = {
 			!player.playing
 		)
 			return message.channel.send(
-				client.i18n.get(language, "commands", "queue_empty", {
-					prefix: guildModel.prefix || CONFIG.PREFIX,
-				}),
+				{
+					content: `${client.i18n.get(language, "commands", "queue_empty", {
+						prefix: guildModel.prefix || CONFIG.PREFIX,
+					})}`
+				}
 			);
 
 		const isSuccess = await command.execute({
@@ -78,14 +88,16 @@ const MessageEvent: IEvent = {
 			args: bargs(command.argsDefinitions, args),
 			manager: client.manager,
 			player,
-			vc: channel,
+			vc: channel as VoiceChannel,
 			language,
 			guildModel,
 		});
 
 		if (!isSuccess)
 			return message.channel.send(
-				client.i18n.get(language, "events", "message_error"),
+				{
+					content: `${client.i18n.get(language, "events", "message_error")}`
+				}
 			);
 	},
 };

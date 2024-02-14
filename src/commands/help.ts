@@ -1,4 +1,4 @@
-import { Message, MessageEmbed } from "discord.js";
+import { Message, EmbedBuilder } from "discord.js";
 import { Categories, CommandArgs, ICommand } from "my-module";
 import CONFIG from "../config";
 
@@ -28,101 +28,54 @@ const HelpCommand: ICommand = {
 		if (command) {
 			const cmd = client.commands.get(command as string);
 			if (!cmd)
-				return message.channel.send(
-					client.i18n.get(
-						language,
-						"commands",
-						"help_command_not_found",
-						{
-							command: command as string,
-						},
-					),
-				);
-			const embed = new MessageEmbed()
-				.setColor("GREEN")
-				.setTitle(
-					client.i18n.get(
-						language,
-						"commands",
-						"help_command_title",
-						{ command: cmd.name },
-					),
-				)
-				.addField(
-					client.i18n.get(language, "commands", "help_command_name"),
-					cmd.name,
-				)
-				.addField(
-					client.i18n.get(
-						language,
-						"commands",
-						"help_command_category",
-					),
-					client.i18n.get(language, "details", cmd.category),
-				)
-				.addField(
-					client.i18n.get(
-						language,
-						"commands",
-						"help_command_description",
-					),
-					client.i18n.get(language, "details", cmd.description),
-				)
-				.addField(
-					client.i18n.get(language, "commands", "help_command_usage"),
-					cmd.usage,
-				)
-				.addField(
-					client.i18n.get(
-						language,
-						"commands",
-						"help_command_examples",
-					),
-					`\`\`\`${cmd.examples
-						.map((example) => `${prefix}${example}`)
-						.join("\n")}\`\`\``,
-				)
-				.setFooter(
-					`Requested By - ${message.author.username}`,
-					message.author.displayAvatarURL({ dynamic: true }),
-				)
-				.setTimestamp();
-			return message.channel.send(embed);
-		} else {
-			const categories: Categories = {};
-			for (const command of client.commands.array()) {
-				if (!categories[command.category])
-					categories[command.category] = [command];
-				else
-					categories[command.category] = [
-						...categories[command.category],
-						command,
-					];
-			}
-			const embed = new MessageEmbed()
-				.setColor("GREEN")
-				.setFooter(
-					`Requested By - ${message.author.username}`,
-					message.author.displayAvatarURL({ dynamic: true }),
-				)
-				.setTimestamp()
-				.setTitle(
-					client.i18n.get(language, "commands", "help_all_commands"),
-				)
-				.setDescription(
-					client.i18n.get(language, "commands", "help_description", {
-						prefix,
-					}),
-				);
-			for (const category in categories) {
-				const commands = categories[category];
-				embed.addField(
-					client.i18n.get(language, "details", category),
-					commands.map((cmd) => `\`${cmd.name}\``).join(" | "),
-				);
-			}
-			return message.channel.send(embed);
+				return;
 		}
+		const embedxd = new EmbedBuilder()
+		.setColor('Random')
+		.setTitle('Lyrpex Help Menu')
+		.setAuthor({ name: message.author.username, iconURL: client.user.displayAvatarURL({}) })
+		.setDescription('The list of commands.')
+		.addFields(
+			{ name: 'play', value: 'Plays the song you specified.', inline: true },
+			{ name: 'bassboss', value: 'Adjusts the bass boost level.', inline: true },
+			{ name: 'join', value: 'Bot joins the channel you are on.', inline: true },
+			)
+		.addFields(
+			{ name: 'leave', value: 'Bot leaves the channel you are on.', inline: true },
+			{ name: 'loopqueue', value: 'Loops the song queue.', inline: true },
+			{ name: 'loopsong', value: 'Loops current song.', inline: true },
+		)
+		.addFields(
+			{ name: 'nowplaying', value: 'Provides information about the song playing.', inline: true },
+			{ name: 'pause', value: 'Pauses the song.', inline: true },
+			{ name: 'ping', value: 'Shows the bots ping.', inline: true }
+		)
+		.addFields(
+			{ name: 'queue', value: 'Shows the song queue.', inline: true },
+			{ name: 'resume', value: 'Resumes the song.', inline: true },
+			{ name: 'seek', value: 'Allows you to skip to the duration of the song you specified.', inline: true },
+		)
+		.addFields(
+			{ name: 'shuffle', value: 'Shuffles the song queue.', inline: true },
+			{ name: 'skip', value: 'Skips current song.', inline: true },
+			{ name: 'skipto', value: 'Skips to the song you specified.', inline: true },
+		)
+		.addFields(
+			{ name: 'volume', value: 'Adjusts the sound level.', inline: true },
+			{ name: 'help', value: 'Gives information about commands.', inline: true },
+			{ name: 'prefix', value: 'Changes the preferred prefix of your server.', inline: true },
+		)
+		.addFields(
+			{ name: 'info', value: 'Gives information about the bot.', inline: true },
+			{ name: 'stats', value: 'Gives bot statistics.', inline: true },
+		)
+		.setTimestamp()
+		.setFooter({ text: 'Lyrpex Music <3', iconURL: client.user.displayAvatarURL({}) });
+		message.channel.send({
+			embeds: [
+				embedxd
+			]
+		})
 	},
 };
 

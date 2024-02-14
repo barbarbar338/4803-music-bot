@@ -19,19 +19,20 @@ const QueueCommand: ICommand = {
 		player,
 		language,
 	}: CommandArgs): Promise<Message> {
-		let currentPage = 0;
 		const embeds = client.functions.generateQueueEmbed(
 			client,
 			message,
 			player.queue,
 		);
-		const queueEmbed = await message.channel.send(
-			`**${client.i18n.get(
+		let currentPage = 0;
+		let currentPagex = embeds;
+		const queueEmbed = await message.channel.send({
+			content: `**${client.i18n.get(
 				language,
 				"commands",
 				"queue_current_page",
 			)}**: ${currentPage + 1}/${embeds.length}`,
-			embeds[currentPage],
+			embeds: [currentPagex]}
 		);
 		await queueEmbed.react("⬅️");
 		await queueEmbed.react("⏹");

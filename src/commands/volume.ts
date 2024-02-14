@@ -25,21 +25,27 @@ const VolumeCommand: ICommand = {
 		const volume = args.volume as number;
 		if (!volume)
 			return message.channel.send(
-				client.i18n.get(language, "commands", "volume_current", {
-					volume: `${player.volume / 10}/10`,
-				}),
+				{
+					content: `${client.i18n.get(language, "commands", "volume_current", {
+						volume: `${player.volume / 10}/10`,
+					})}`
+				}
 			);
 
 		if (isNaN(volume) || (volume > 11 && volume < 1))
 			return message.channel.send(
-				client.i18n.get(language, "commands", "volume_range"),
+				{
+					content: `${client.i18n.get(language, "commands", "volume_range")}`
+				}
 			);
 
 		player.setVolume(volume * 10);
 		return message.channel.send(
-			client.i18n.get(language, "commands", "volume_set", {
-				volume: volume.toFixed(1),
-			}),
+			{
+				content: `${client.i18n.get(language, "commands", "volume_set", {
+					volume: volume.toFixed(1),
+				})}`
+			}
 		);
 	},
 };

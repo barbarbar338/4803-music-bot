@@ -21,9 +21,11 @@ const SkipCommand: ICommand = {
 	}: CommandArgs): Promise<Message> {
 		player.stop();
 		return message.channel.send(
-			client.i18n.get(language, "commands", "skip_skipped", {
-				song: player.queue.current.title,
-			}),
+			{
+				content: `${client.i18n.get(language, "commands", "skip_skipped", {
+					song: player.queue.current.title,
+				})}`
+			}
 		);
 	},
 };

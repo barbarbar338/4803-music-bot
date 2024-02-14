@@ -1,4 +1,4 @@
-import { Message, MessageEmbed } from "discord.js";
+import { Message, EmbedBuilder } from "discord.js";
 import { Queue } from "erela.js";
 import { Core } from "./Core";
 
@@ -76,7 +76,7 @@ export function generateQueueEmbed(
 	client: Core,
 	message: Message,
 	queue: Queue,
-): MessageEmbed[] {
+): EmbedBuilder[] {
 	const embeds = [];
 	const size = queue.size === 0 && queue.current !== null ? 1 : queue.size;
 	let k = 10;
@@ -91,20 +91,17 @@ export function generateQueueEmbed(
 		const info = current
 			.map((track) => `${++j + 1} - ${track.title}`)
 			.join("\n");
-		const embed = new MessageEmbed()
-			.setAuthor(
-				`${client.user.username} Queue`,
-				client.user.displayAvatarURL(),
-			)
+		const embed = new EmbedBuilder()
+		.setAuthor({ name: 'Lyrpex Queue', iconURL: client.user.displayAvatarURL({}) })
 			.setTitle("Song Queue\n")
-			.setThumbnail(message.guild.iconURL({ dynamic: true }))
-			.setColor("GREEN")
+			.setThumbnail(message.guild.iconURL({}))
+			.setColor("Green")
 			.setDescription(
 				`\n**Current Song** - ${queue.current.title}\n\n${info}`,
 			)
-			.setFooter(
-				`Requested By - ${message.author.username}`,
-				message.author.displayAvatarURL({ dynamic: true }),
+			.setFooter({
+				text: `Requested By - ${message.author.username}`,
+				iconURL: message.author.displayAvatarURL({  })}
 			)
 			.setTimestamp();
 		embeds.push(embed);

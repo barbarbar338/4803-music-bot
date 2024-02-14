@@ -21,11 +21,15 @@ const ShuffleCommand: ICommand = {
 	}: CommandArgs): Promise<Message> {
 		if (player.queue.size === 0 || player.position === 0)
 			return message.channel.send(
-				client.i18n.get(language, "commands", "queue_empty"),
+				{
+					content: `${client.i18n.get(language, "commands", "queue_empty")}`
+				}
 			);
 		player.queue.shuffle();
 		return message.channel.send(
-			client.i18n.get(language, "commands", "shuffle_shuffled"),
+			{
+				content: `${client.i18n.get(language, "commands", "shuffle_shuffled")}`
+			}
 		);
 	},
 };

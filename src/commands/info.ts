@@ -1,4 +1,4 @@
-import { Message, MessageEmbed } from "discord.js";
+import { Message, EmbedBuilder } from "discord.js";
 import { CommandArgs, ICommand } from "my-module";
 import CONFIG from "../config";
 
@@ -19,15 +19,15 @@ const InfoCommand: ICommand = {
 		message,
 		language,
 	}: CommandArgs): Promise<Message> {
-		const embed = new MessageEmbed()
-			.setColor("GREEN")
+		const embed = new EmbedBuilder()
+			.setColor("Green")
 			.setThumbnail(client.user.avatarURL())
-			.setFooter(
-				`Requested By - ${message.author.username}`,
-				message.author.displayAvatarURL({ dynamic: true }),
+			.setFooter({
+				text: `Requested By - ${message.author.username}`,
+				iconURL: message.author.displayAvatarURL({}),}
 			)
 			.setTimestamp()
-			.setTitle(client.i18n.get(language, "commands", "info_title"))
+			.setTitle("Thanks for choosing Lyrpex.")
 			.setDescription(
 				client.i18n.get(language, "commands", "info_description") +
 					"\n\n" +
@@ -65,7 +65,9 @@ const InfoCommand: ICommand = {
 					})`,
 			);
 
-		return message.channel.send(embed);
+		return message.channel.send({
+			embeds: [embed]
+		});
 	},
 };
 

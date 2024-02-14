@@ -2,6 +2,8 @@ import {
 	ActivityType,
 	Client,
 	Collection,
+	GatewayIntentBits,
+	Partials,
 	PresenceStatusData,
 } from "discord.js";
 import { Manager } from "erela.js";
@@ -33,21 +35,9 @@ export class Core extends Client {
 	constructor() {
 		super({
 			shardCount: CONFIG.SHARD_COUNT,
-			presence: {
-				activity: {
-					name: Functions.random<string>(
-						CONFIG.PRESENCE.activity.name,
-					),
-					type: Functions.random<ActivityType>(
-						CONFIG.PRESENCE.activity.type,
-					),
-				},
-				afk: false,
-				status: Functions.random<PresenceStatusData>(
-					CONFIG.PRESENCE.status,
-				),
-			},
-		});
+			intents: Object.keys(GatewayIntentBits).map((intent) => GatewayIntentBits[intent]),
+			partials: Object.keys(Partials).map((partial) => Partials[partial])
+		})
 	}
 
 	private async importCommands(): Promise<void> {
@@ -94,6 +84,16 @@ export class Core extends Client {
 		await this.importEvents();
 		await this.importManagerEvents();
 		await this.importCommands();
+
+		this.on('ready', async() => {
+			type MyActivityType = ActivityType.Playing | ActivityType.Listening | ActivityType.Watching;
+			const activityName = Functions.random<string>(CONFIG.PRESENCE.activity.name);
+			const activityType = Functions.random<ActivityType>(CONFIG.PRESENCE.activity.type);
+			setInterval(() => {
+			this.user.setActivity(activityName, { type: activityType as MyActivityType });
+		}, CONFIG.PRESENCE.interval)
+		})
+ 
 		this.logger.info("Connecting to MongoDB");
 		await connect(CONFIG.MONGODB_URI, {
 			useNewUrlParser: true,

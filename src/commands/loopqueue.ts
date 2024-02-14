@@ -22,12 +22,16 @@ const LoopQueueCommand: ICommand = {
 		if (!player.queueRepeat) {
 			player.setQueueRepeat(true);
 			return message.channel.send(
-				client.i18n.get(language, "commands", "loopqueue_looped"),
+				{
+					content: "🔁 Looping the queue."
+				}
 			);
 		} else {
 			player.setQueueRepeat(false);
 			return message.channel.send(
-				client.i18n.get(language, "commands", "loopqueue_unlooped"),
+				{
+					content: "🔁 Queue doesn't loop anymore."
+				}
 			);
 		}
 	},

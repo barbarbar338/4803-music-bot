@@ -33,9 +33,11 @@ const PrefixCommand: ICommand = {
 		language,
 		args,
 	}: CommandArgs): Promise<Message> {
-		if (!message.member.permissions.has("ADMINISTRATOR"))
+		if (!message.member.permissions.has("Administrator"))
 			return message.channel.send(
-				client.i18n.get(language, "commands", "no_admin_perm"),
+				{
+					content: "You need `Administrator` permission to use this command."
+				}
 			);
 		const { reset, prefix } = args;
 		if (reset) {
@@ -44,25 +46,32 @@ const PrefixCommand: ICommand = {
 				{ prefix: null },
 			);
 			return message.channel.send(
-				client.i18n.get(language, "commands", "prefix_reset"),
+				{
+					content: "Your server's preferred prefix has been successfully reset."
+				}
 			);
 		} else {
 			if (!prefix)
 				return message.channel.send(
-					client.i18n.get(language, "commands", "prefix_define"),
+					{
+						content: "Specify your server's preferred prefix"
+					}
 				);
 			if ((prefix as string).length > 4)
 				return message.channel.send(
-					client.i18n.get(language, "commands", "prefix_length"),
+					{
+						content: "Your server's preferred prefix should be less than 5 characters."
+					}
 				);
 			await GuildModel.updateOne(
 				{ guildID: message.guild.id },
 				{ prefix: prefix as string },
 			);
+			let newprefix = prefix as string;
 			return message.channel.send(
-				client.i18n.get(language, "commands", "prefix_update", {
-					prefix: prefix as string,
-				}),
+				{
+					content: `Your server's preferred prefix has been successfully updated. Try using ${newprefix}help command to see effects`
+				}
 			);
 		}
 	},

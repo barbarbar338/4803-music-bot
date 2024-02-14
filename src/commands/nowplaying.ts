@@ -1,4 +1,4 @@
-import { Message, MessageEmbed } from "discord.js";
+import { Message, EmbedBuilder } from "discord.js";
 import { CommandArgs, ICommand } from "my-module";
 
 const NowPlayingCommand: ICommand = {
@@ -47,19 +47,21 @@ const NowPlayingCommand: ICommand = {
 			)} / ${client.functions.formatDuration(totalDurationObj)}\``;
 		}
 
-		const embed = new MessageEmbed()
+		const embed = new EmbedBuilder()
 			.setThumbnail(
 				`https://i.ytimg.com/vi/${video.identifier}/hqdefault.jpg`,
 			)
-			.setColor("GREEN")
+			.setColor("Green")
 			.setTitle(video.title)
 			.setDescription(description)
-			.setFooter(
-				message.author.username,
-				message.author.displayAvatarURL({ dynamic: true }),
+			.setFooter({
+				text: message.author.username,
+				iconURL: message.author.displayAvatarURL({  })}
 			)
 			.setTimestamp();
-		return message.channel.send(embed);
+		return message.channel.send({
+			embeds: [embed]
+		});
 	},
 };
 

@@ -22,12 +22,16 @@ const LoopSongCommand: ICommand = {
 		if (!player.trackRepeat) {
 			player.setTrackRepeat(true);
 			return message.channel.send(
-				client.i18n.get(language, "commands", "loopsong_looped"),
+				{
+					content: "🔁 Looping the song."
+				}
 			);
 		} else {
 			player.setTrackRepeat(false);
 			return message.channel.send(
-				client.i18n.get(language, "commands", "loopsong_unlooped"),
+				{
+					content: "🔁 Song doesn't loop anymore."
+				}
 			);
 		}
 	},

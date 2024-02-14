@@ -1,7 +1,7 @@
 import { TextChannel, VoiceChannel } from "discord.js";
 import { IManagerEvent } from "my-module";
 import CONFIG from "../../config";
-import { GuildModel } from "../../models/guildModel";
+import { GuildModel, IGuildModel } from "../../models/guildModel";
 
 const QueueEndEvent: IManagerEvent = {
 	name: "queueEnd",
@@ -10,7 +10,7 @@ const QueueEndEvent: IManagerEvent = {
 		const channel = client.channels.cache.get(player.textChannel);
 		if (!channel) return;
 
-		let guildModel = await GuildModel.findOne({
+		let guildModel: IGuildModel | null = await GuildModel.findOne({
 			guildID: (channel as VoiceChannel).guild.id,
 		});
 		if (!guildModel) {
@@ -22,9 +22,11 @@ const QueueEndEvent: IManagerEvent = {
 		const { language, prefix } = guildModel;
 
 		(channel as TextChannel).send(
-			client.i18n.get(language, "events", "queue_end", {
-				prefix: prefix || CONFIG.PREFIX,
-			}),
+			{
+				content: `${client.i18n.get(language, "events", "queue_end", {
+					prefix: prefix || CONFIG.PREFIX,
+				})}`
+			}
 		);
 	},
 };
