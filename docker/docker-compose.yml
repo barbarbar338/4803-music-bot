@@ -1,0 +1,42 @@
+version: "3.8"
+
+services:
+    mongo:
+        image: mongo
+        restart: unless-stopped
+        ports:
+            - 27017:27017
+        volumes:
+            - ./mongo_data:/data
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: admin
+            MONGO_INITDB_ROOT_PASSWORD: password
+    mongo-express:
+        image: mongo-express
+        restart: unless-stopped
+        ports:
+            - 8081:8081
+        depends_on:
+            - mongo
+        environment:
+            ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+            ME_CONFIG_MONGODB_ADMINPASSWORD: password
+            ME_CONFIG_MONGODB_URL: mongodb://admin:password@mongo
+    lavalink-1:
+        image: ghcr.io/lavalink-devs/lavalink:4
+        restart: unless-stopped
+        environment:
+            - _JAVA_OPTIONS=-Xmx2G
+            - SERVER_PORT=2333
+            - LAVALINK_SERVER_PASSWORD=youshallnotpass
+        ports:
+            - 2333:2333
+    lavalink-2:
+        image: ghcr.io/lavalink-devs/lavalink:4
+        restart: unless-stopped
+        environment:
+            - _JAVA_OPTIONS=-Xmx2G
+            - SERVER_PORT=2333
+            - LAVALINK_SERVER_PASSWORD=youshallnotpass
+        ports:
+            - 2334:2333
