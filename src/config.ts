@@ -1,7 +1,8 @@
 import { ActivityType, PresenceStatusData } from "discord.js";
 import * as dotenv from "dotenv";
 import { resolve } from "path";
-
+import { Core } from "./struct/Core";
+const client = new Core();
 dotenv.config();
 
 const SHARD_COUNT = parseInt(process.env.SHARD_COUNT);
@@ -31,17 +32,13 @@ const CONFIG = {
 		activity: {
 			name: [
 				`${PREFIX}help | Use ${PREFIX}help to see commands`,
-				`${PREFIX}help | Use ${PREFIX}info to get more information about me`,
-				`${PREFIX}help | Dedicated music bot`,
-				`${PREFIX}help | All open sourced ❤️ Type ${PREFIX}info for more information`,
-				`${PREFIX}help | Set your prefix with ${PREFIX}prefix and your language with ${PREFIX}language`,
+				`${PREFIX}help | Use ${PREFIX}info to get more information about me!`,
+				`${PREFIX}help | ${client.guilds.cache.size} Server's`,
+				`${PREFIX}help | ${client.users.cache.size} User's`
 			],
 			type: [
-				"COMPETING",
-				"LISTENING",
-				"PLAYING",
-				"WATCHING",
-			] as ActivityType[],
+				ActivityType.Playing, ActivityType.Listening, ActivityType.Watching
+				] as ActivityType[],
 		},
 		afk: false,
 		status: ["dnd", "idle", "online"] as PresenceStatusData[],

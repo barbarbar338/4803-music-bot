@@ -45,9 +45,7 @@ const BassBoostCommand: ICommand = {
 		player.setEQ(...bands);
 
 		return message.channel.send(
-			client.i18n.get(language, "commands", "bass_boost_set", {
-				level,
-			}),
+			{ content: `Bass boost level set to ${level}`}
 		);
 	},
 };

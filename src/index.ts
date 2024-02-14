@@ -21,7 +21,7 @@ Manager.spawn().then(() => {
 });
 
 Manager.on("shardCreate", (shard) =>
-	Logger.info(
+	console.info(
 		`Shard ${shard.id} spawned (${shard.id + 1}/${CONFIG.SHARD_COUNT})`,
 	),
 );

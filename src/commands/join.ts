@@ -1,3 +1,4 @@
+import { joinVoiceChannel } from "@discordjs/voice";
 import { Message } from "discord.js";
 import { CommandArgs, ICommand } from "my-module";
 
@@ -30,17 +31,37 @@ const JoinCommand: ICommand = {
 					selfDeafen: true,
 				})
 				.connect();
+				await joinVoiceChannel({
+					channelId: message.member.voice.channelId,
+					guildId: message.guildId,
+					adapterCreator: message.guild.voiceAdapterCreator,
+					selfDeaf: true,
+					selfMute: false
+				})
+				
 			return message.channel.send(
-				client.i18n.get(language, "commands", "join_joined"),
+				{
+					content: "Connected."
+				}
 			);
-		} else if (!message.guild.me.voice.channel) {
-			message.guild.me.voice.channel.join();
+		} else if (message.member.voice.channelId) {
+			await joinVoiceChannel({
+				channelId: message.member.voice.channelId,
+				guildId: message.guildId,
+				adapterCreator: message.guild.voiceAdapterCreator,
+				selfDeaf: true,
+				selfMute: false
+			})
 			return message.channel.send(
-				client.i18n.get(language, "commands", "join_joined"),
+				{
+					content: "Connected."
+				}
 			);
 		} else
 			return message.channel.send(
-				client.i18n.get(language, "commands", "join_another_channel"),
+				{
+					content: "I'm on another channel. How about you come to me?"
+				}
 			);
 	},
 };

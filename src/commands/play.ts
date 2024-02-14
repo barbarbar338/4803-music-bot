@@ -1,3 +1,4 @@
+import { joinVoiceChannel } from "@discordjs/voice";
 import { Message } from "discord.js";
 import { CommandArgs, ICommand } from "my-module";
 
@@ -30,8 +31,17 @@ const PlayCommand: ICommand = {
 	}: CommandArgs): Promise<Message> {
 		if (!args.query)
 			return message.channel.send(
-				client.i18n.get(language, "commands", "play_no_search_term"),
+				{
+					content: "You need to give me a URL or a search term."
+				}
 			);
+			await joinVoiceChannel({
+				channelId: message.member.voice.channelId,
+				guildId: message.guildId,
+				adapterCreator: message.guild.voiceAdapterCreator,
+				selfDeaf: true,
+				selfMute: false
+			})
 
 		const player = manager.create({
 			guild: message.guild.id,
@@ -52,9 +62,9 @@ const PlayCommand: ICommand = {
 			}
 		} catch (err) {
 			return message.channel.send(
-				client.i18n.get(language, "commands", "play_search_error", {
-					message: err.message,
-				}),
+				{
+					content: `An error occured while searching, please get in touch with Takachi (takachixrd) or 338 (barbarbar338). error: ${err}`
+				}
 			);
 		}
 
@@ -62,16 +72,18 @@ const PlayCommand: ICommand = {
 			case "NO_MATCHES":
 				if (!player.queue.current) player.destroy();
 				return message.channel.send(
-					client.i18n.get(language, "commands", "play_no_matches"),
+					{
+						content: "I couldn't find any results."
+					}
 				);
 			case "TRACK_LOADED":
 				player.queue.add(res.tracks[0]);
 				if (!player.playing && !player.paused && !player.queue.size)
 					player.play();
 				return message.channel.send(
-					client.i18n.get(language, "commands", "play_enqueuing", {
-						song: res.tracks[0].title,
-					}),
+					{
+						content: `Enqueuing '${res.treacks[0].title}'`
+					}
 				);
 			case "PLAYLIST_LOADED":
 				player.queue.add(res.tracks);
@@ -81,16 +93,12 @@ const PlayCommand: ICommand = {
 					player.queue.totalSize === res.tracks.length
 				)
 					player.play();
+					const playlist = res.playlist.name;
+					const tracks = res.tracks.length;
 				return message.reply(
-					client.i18n.get(
-						language,
-						"commands",
-						"play_enqueuing_playlist",
-						{
-							playlist: res.playlist.name,
-							tracks: res.tracks.length,
-						},
-					),
+					{
+						content: `Enqueuing playlist ${playlist} with ${tracks} tracks.`
+					}
 				);
 			case "SEARCH_RESULT":
 				let max = 5,
@@ -112,19 +120,17 @@ const PlayCommand: ICommand = {
 				);
 
 				try {
-					collected = await message.channel.awaitMessages(filter, {
+					/*collected = await message.channel.awaitMessages(filter, {
 						max: 1,
 						time: 30e3,
 						errors: ["time"],
-					});
+					});*/
 				} catch (e) {
 					if (!player.queue.current) player.destroy();
 					return message.channel.send(
-						client.i18n.get(
-							language,
-							"commands",
-							"play_no_selection",
-						),
+						{
+							content: "Process is canceled because you did not specify an option."
+						}
 					);
 				}
 
@@ -133,21 +139,18 @@ const PlayCommand: ICommand = {
 				if (first.toLowerCase() === "cancel") {
 					if (!player.queue.current) player.destroy();
 					return message.channel.send(
-						client.i18n.get(language, "commands", "play_canceled"),
+						{
+							content: "Type `cancel` to cancel the operation."
+						}
 					);
 				}
 
 				const index = Number(first) - 1;
 				if (index < 0 || index > max - 1)
 					return message.channel.send(
-						client.i18n.get(
-							language,
-							"commands",
-							"play_unexpected_track",
-							{
-								max: max.toString(),
-							},
-						),
+						{
+							content: `The number you provided too small or too big (1-${max.toString}).`
+						}
 					);
 
 				const track = res.tracks[index];
@@ -156,9 +159,9 @@ const PlayCommand: ICommand = {
 				if (!player.playing && !player.paused && !player.queue.size)
 					player.play();
 				return message.reply(
-					client.i18n.get(language, "commands", "play_enqueuing", {
-						song: track.title,
-					}),
+					{
+						content: `Enqueuing ${track.title}`
+					}
 				);
 		}
 	},

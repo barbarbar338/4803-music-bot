@@ -24,38 +24,48 @@ const SkipToCommand: ICommand = {
 	}: CommandArgs): Promise<Message> {
 		if (!args.skip)
 			return message.channel.send(
-				client.i18n.get(language, "commands", "skip_to_specify_number"),
+				{
+					content: `${client.i18n.get(language, "commands", "skip_to_specify_number")}`
+				}
 			);
 
 		const position = args.skip as number;
 
 		if (isNaN(position) || position < 1)
 			return message.channel.send(
-				client.i18n.get(language, "commands", "skip_to_integer"),
+				{
+					content: `${client.i18n.get(language, "commands", "skip_to_integer")}`
+				}
 			);
 		if (
 			position > player.queue.size ||
 			!player.queue[player.queue.size > 1 ? position - 2 : position - 1]
 		)
 			return message.channel.send(
-				client.i18n.get(language, "commands", "song_not_found"),
+				{
+					content: `${client.i18n.get(language, "commands", "song_not_found")}`
+				}
 			);
 
 		if (position > 1 && player.queue.size != position) {
 			player.queue.splice(0, position - 2);
 			player.stop();
 			return message.channel.send(
-				client.i18n.get(language, "commands", "skip_to_skipped", {
-					length: (position - 1).toString(),
-				}),
+				{
+					content: `${client.i18n.get(language, "commands", "skip_to_skipped", {
+						length: (position - 1).toString(),
+					})}`
+				}
 			);
 		} else if (position > 1 && player.queue.size == position) {
 			player.queue.splice(0, player.queue.length - 1);
 			player.stop();
 			return message.channel.send(
-				client.i18n.get(language, "commands", "skip_to_skipped", {
-					length: (position - 1).toString(),
-				}),
+				{
+					content: `${client.i18n.get(language, "commands", "skip_to_skipped", {
+						length: (position - 1).toString(),
+					})}`
+				}
 			);
 		}
 	},

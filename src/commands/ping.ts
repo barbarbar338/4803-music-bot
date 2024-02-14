@@ -18,10 +18,11 @@ const PingCommand: ICommand = {
 		message,
 		language,
 	}: CommandArgs): Promise<Message> {
+		let ping = client.ws.ping.toFixed(2) as string;
 		return message.channel.send(
-			client.i18n.get(language, "commands", "ping_ping", {
-				ping: client.ws.ping.toFixed(2),
-			}),
+			{
+				content: `🏓 Pong! ${ping} ms.`
+			}
 		);
 	},
 };

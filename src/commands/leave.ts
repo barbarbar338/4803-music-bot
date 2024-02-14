@@ -1,3 +1,4 @@
+import { getVoiceConnection } from "@discordjs/voice";
 import { Message } from "discord.js";
 import { CommandArgs, ICommand } from "my-module";
 
@@ -22,14 +23,19 @@ const LeaveCommand: ICommand = {
 		if (player) {
 			player.destroy();
 			return message.channel.send(
-				client.i18n.get(language, "commands", "leave_leaved"),
+				{
+					content: "Disconnected."
+				}
 			);
-		} else if (message.guild.me.voice.channel) {
-			message.guild.me.voice.channel.leave();
+		} else { let bot = message.guild.members.cache.get(client.user.id); if (bot) {
+			const connection = getVoiceConnection(message.guildId);
+			await connection.destroy()
 			return message.channel.send(
-				client.i18n.get(language, "commands", "leave_leaved"),
+				{
+					content: "Disconnected."
+				}
 			);
-		}
+		}}
 	},
 };
 

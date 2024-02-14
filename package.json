@@ -28,12 +28,13 @@
 		"kill": "npm run pm2:kill"
 	},
 	"dependencies": {
-		"@discordjs/opus": "^0.3.3",
+		"@discordjs/opus": "^0.9.0",
+		"@discordjs/voice": "^0.16.1",
 		"bargs": "^1.0.1",
 		"bufferutil": "^4.0.2",
 		"concurrently": "^5.3.0",
-		"discord.js": "^12.5.1",
-		"dotenv": "^8.2.0",
+		"discord.js": "^14.12.1",
+		"dotenv": "^8.6.0",
 		"erela.js": "^2.3.0",
 		"erlpack": "discord/erlpack",
 		"express": "^4.17.1",

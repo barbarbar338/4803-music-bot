@@ -49,10 +49,10 @@ const SeekCommand: ICommand = {
 	}: CommandArgs): Promise<Message> {
 		const { seconds, minutes, hours, days } = args;
 		if (seconds && minutes && hours && days)
-			return await message.channel.send(
-				client.i18n.get(language, "commands", "seek_invalid_format", {
+			return await message.channel.send({
+				content: `${client.i18n.get(language, "commands", "seek_invalid_format", {
 					prefix: guildModel.prefix || CONFIG.PREFIX,
-				}),
+				})},`}
 			);
 
 		let str: string;
@@ -64,20 +64,18 @@ const SeekCommand: ICommand = {
 
 		const timestampInMS = client.functions.parseTime(str);
 		if (timestampInMS === null)
-			return await message.channel.send(
-				client.i18n.get(language, "commands", "seek_invalid_format", {
-					prefix: guildModel.prefix || CONFIG.PREFIX,
-				}),
+			return await message.channel.send({
+				content: `${client.i18n.get(language, "commands", "seek_invalid_format", { prefix: guildModel.prefix || CONFIG.PREFIX,})}`,}
 			);
 		if (timestampInMS > player.queue.current.duration || timestampInMS < 0)
-			return message.channel.send(
-				client.i18n.get(language, "commands", "seek_length"),
-			);
+			return message.channel.send({
+				content: `${client.i18n.get(language, "commands", "seek_length")},`
+			});
 
 		player.seek(timestampInMS);
-		return message.channel.send(
-			client.i18n.get(language, "commands", "seek_seeked"),
-		);
+		return message.channel.send({
+			content: `${client.i18n.get(language, "commands", "seek_seeked")}`,
+		});
 	},
 };
 

@@ -1,11 +1,11 @@
 import { TextChannel, VoiceState } from "discord.js";
 import { IEvent } from "my-module";
-import { GuildModel } from "../../models/guildModel";
+import { GuildModel, IGuildModel } from "../../models/guildModel";
 
 const VoiceStateUpdateEvent: IEvent = {
 	name: "voiceStateUpdate",
 	async execute(client, oldState: VoiceState, newState: VoiceState) {
-		if (oldState.channelID && !newState.channelID) {
+		if (oldState.channelId && !newState.channelId) {
 			const player = client.manager.get(oldState.guild.id);
 			if (!player) return;
 			if (
@@ -18,18 +18,21 @@ const VoiceStateUpdateEvent: IEvent = {
 					player.textChannel,
 				) as TextChannel;
 				if (channel) {
-					let guildModel = await GuildModel.findOne({
-						guildID: channel.guild.id,
-					});
-					if (!guildModel) {
+					let guildModel: IGuildModel | null = await GuildModel.findOne({
+						guildID: oldState.guild.id,
+					  });
+					  
+					  if (!guildModel) {
 						guildModel = await GuildModel.create({
-							guildID: channel.guild.id,
-							language: "en",
+						  guildID: oldState.guild.id,
+						  language: "en",
 						});
-					}
+					  }
 					const { language } = guildModel;
 					await channel.send(
-						client.i18n.get(language, "events", "channel_empty"),
+						{
+							content: `${client.i18n.get(language, "events", "channel_empty")}`
+						}
 					);
 				}
 				player.destroy();
@@ -42,9 +45,9 @@ const VoiceStateUpdateEvent: IEvent = {
 			) as TextChannel;
 			if (newState.mute) {
 				if (channel) {
-					let guildModel = await GuildModel.findOne({
-						guildID: channel.guild.id,
-					});
+					let guildModel: IGuildModel | null = await GuildModel.findOne({
+						guildID: oldState.guild.id,
+					  });
 					if (!guildModel) {
 						guildModel = await GuildModel.create({
 							guildID: channel.guild.id,
@@ -53,7 +56,9 @@ const VoiceStateUpdateEvent: IEvent = {
 					}
 					const { language } = guildModel;
 					await channel.send(
-						client.i18n.get(language, "events", "player_muted"),
+						{
+							content: `${client.i18n.get(language, "events", "player_muted")}`
+						}
 					);
 				}
 				player.pause(true);
